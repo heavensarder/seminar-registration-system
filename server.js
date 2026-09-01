@@ -3,6 +3,11 @@ import mysql from 'mysql2/promise';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -11,6 +16,9 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the React frontend build
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Create connection pool
 const pool = mysql.createPool({
@@ -325,6 +333,11 @@ app.post('/api/settings/mail/preview', (req, res) => {
   const { template } = req.body;
   const html = compileTemplate(template, '[Participant Name]', 'Kizuna 3001');
   res.send(html);
+});
+
+// Catch-all route to serve the React app for non-API requests (React Router support)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // Start server
