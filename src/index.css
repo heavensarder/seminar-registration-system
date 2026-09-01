@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-script {
+    font-family: 'Kaushan Script', 'Caveat', cursive;
+  }
+  .font-headline {
+    font-family: 'Oswald', 'Plus Jakarta Sans', sans-serif;
+  }
+  .font-body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+  .font-jp {
+    font-family: 'Noto Sans JP', 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+:root {
+  --teal-deep: #083331;
+  --teal-forest: #0d4643;
+  --teal-spruce: #145854;
+  --teal-mint-light: #c8e8e7;
+  --teal-seafoam: #e2f2f1;
+  --accent-red: #e62b32;
+  --accent-red-dark: #cc181f;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background-color: #052322;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Custom refined scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #083331;
+}
+::-webkit-scrollbar-thumb {
+  background: #196b66;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #258f89;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
