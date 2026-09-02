@@ -375,7 +375,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                 className="bg-white text-slate-900 rounded-3xl p-5 sm:p-6 shadow-xl border border-slate-200 cursor-pointer hover:border-teal-400 transition-colors flex flex-col justify-between group"
                 title={isJa ? "主催と協賛の詳細を見る" : "Click to view host and sponsors details"}
               >
-                <div className="text-center italic font-serif text-xs text-slate-700 font-medium mb-3">
+                <div className="text-center italic font-serif text-xs text-slate-700 font-bold mb-3">
                   {isJa ? '主催 & 協賛' : 'Host & Sponsors'}
                 </div>
 
@@ -388,8 +388,8 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
 
                   {/* Sponsor Names List matching flyer */}
                   <div className="space-y-1 text-xs text-left">
-                    <div className="font-bold text-slate-900 tracking-tight leading-tight">
-                      ZENMIRAI JAPAN
+                    <div className="font-medium text-slate-900 tracking-tight leading-tight">
+                      Zenmirai Japan
                     </div>
                     <div className="font-medium text-slate-700 tracking-tight leading-tight">
                       Hudsonland Bangladesh Ltd.

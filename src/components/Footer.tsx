@@ -30,14 +30,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenRegister, onOpenVenue, onO
         </div>
 
         {/* Bottom copyright */}
-        <div className="mt-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-teal-300/60">
-          <div>
+        <div className="mt-5 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-2 text-[11px] text-teal-300/60 text-center sm:text-left">
+          <div className="leading-relaxed px-4 sm:px-0">
             © 2026 Kizuna Okayama-Bangladesh Partnership Seminar Organizing Committee.
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 mt-1 sm:mt-0">
             <span>Saturday, Sept 19, 2026</span>
-            <span>•</span>
-            <span>Okayama International Exchange Center</span>
+            <span className="hidden sm:block">•</span>
+            <span className="text-teal-300/50 sm:text-teal-300/60">Okayama International Exchange Center</span>
           </div>
         </div>
 
