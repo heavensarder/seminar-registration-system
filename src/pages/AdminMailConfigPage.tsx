@@ -77,7 +77,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ host, port, email, password, template }),
       });
-      
+
       if (res.ok) {
         setSaved(true);
         setTimeout(() => setSaved(false), 3000);
@@ -95,9 +95,9 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
   return (
     <AdminLayout onLogout={onLogout}>
       <div className="max-w-7xl mx-auto space-y-8 pb-12">
-        
+
         <div className="grid xl:grid-cols-2 gap-8">
-          
+
           {/* Settings Form */}
           <div className="bg-[#052322] border border-[#16605b]/50 rounded-3xl overflow-hidden shadow-xl p-8 h-fit flex flex-col">
             <h3 className="font-headline font-bold text-white tracking-widest uppercase text-xl mb-2 flex items-center gap-3">
@@ -112,7 +112,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-teal-100 uppercase tracking-widest mb-2">SMTP Host</label>
-                  <input 
+                  <input
                     type="text"
                     required
                     value={host}
@@ -123,7 +123,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-teal-100 uppercase tracking-widest mb-2">SMTP Port</label>
-                  <input 
+                  <input
                     type="text"
                     required
                     value={port}
@@ -140,7 +140,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Mail className="w-5 h-5 text-teal-100/40" />
                   </div>
-                  <input 
+                  <input
                     type="email"
                     required
                     value={email}
@@ -152,12 +152,12 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-teal-100 uppercase tracking-widest mb-2">Google App Password</label>
+                <label className="block text-xs font-bold text-teal-100 uppercase tracking-widest mb-2">App Password</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <KeyRound className="w-5 h-5 text-teal-100/40" />
                   </div>
-                  <input 
+                  <input
                     type={showPassword ? "text" : "password"}
                     required
                     value={password}
@@ -165,7 +165,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
                     placeholder="16-character App Password"
                     className="w-full bg-[#083331] border border-[#16605b] text-white pl-12 pr-12 py-3.5 rounded-xl outline-none focus:border-[#79ded7] focus:ring-1 focus:ring-[#79ded7] transition-all font-mono"
                   />
-                  <button 
+                  <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer text-teal-100/40 hover:text-white transition-colors"
@@ -183,7 +183,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
                   <Code className="w-4 h-4" />
                   HTML Email Template
                 </label>
-                <textarea 
+                <textarea
                   value={template}
                   onChange={handleTemplateChange}
                   className="w-full flex-1 bg-[#041e1d] border border-[#16605b] text-teal-100 p-4 rounded-xl outline-none focus:border-[#79ded7] focus:ring-1 focus:ring-[#79ded7] transition-all font-mono text-xs resize-none"
