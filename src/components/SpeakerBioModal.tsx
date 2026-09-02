@@ -56,12 +56,7 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
               <p className="font-bold text-[#083331] text-sm leading-snug">
                 "{speaker.topic}"
               </p>
-              {speaker.speechTime && (
-                <div className="text-xs text-[#0f534f] font-medium flex items-center gap-1 mt-1">
-                  <Clock className="w-3.5 h-3.5 text-[#0d4643]" />
-                  <span>Scheduled: {speaker.speechTime} JST</span>
-                </div>
-              )}
+
             </div>
           )}
 

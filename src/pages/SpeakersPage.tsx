@@ -117,10 +117,7 @@ export const SpeakersPage: React.FC<SpeakersPageProps> = ({
                 <div className="font-headline text-lg sm:text-xl font-bold text-white mt-1">
                   {keynote.topic}
                 </div>
-                <div className="flex items-center gap-2 text-xs text-amber-300 font-semibold mt-2">
-                  <Clock className="w-4 h-4" />
-                  <span>Scheduled Time: {keynote.speechTime} JST</span>
-                </div>
+
               </div>
 
               {/* Bio */}
@@ -223,12 +220,7 @@ export const SpeakersPage: React.FC<SpeakersPageProps> = ({
                         <div className="font-semibold text-slate-900 mt-0.5">
                           {speaker.topic}
                         </div>
-                        {speaker.speechTime && (
-                          <div className="flex items-center gap-1.5 text-[11px] text-amber-700 font-medium mt-1.5">
-                            <Clock className="w-3.5 h-3.5" />
-                            <span>{speaker.speechTime} JST</span>
-                          </div>
-                        )}
+
                       </div>
                     )}
 

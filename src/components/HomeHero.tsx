@@ -212,8 +212,13 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
 
                   {/* Speaker Name & Designation */}
                   <div className="flex flex-wrap items-baseline gap-x-2 text-left min-w-0">
-                    <span className="font-headline font-bold text-white text-xs sm:text-sm md:text-base tracking-wide">
+                    <span className="font-headline font-bold text-white text-xs sm:text-sm md:text-base tracking-wide flex items-center gap-2">
                       {speaker.name},
+                      {speaker.badge && (
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] sm:text-xs font-bold bg-amber-500 text-[#041e1d] tracking-wider uppercase">
+                          {speaker.badge}
+                        </span>
+                      )}
                     </span>
                     <span className="text-xs sm:text-sm text-[#d4f2f0] font-normal truncate">
                       {isJa 
@@ -224,6 +229,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                            speaker.role === 'Executive Director, TSI Limited, Bangladesh &' ? 'TSIリミテッド バングラデシュ 専務取締役 兼' : 
                            speaker.role === 'CEO' ? 'CEO' : 
                            speaker.role === 'Chairperson' ? '理事長' : 
+                           speaker.role === 'WOMC Executive Director, West-Okayama Medical Clinic & Chairman, Hudsonland' ? '西岡山医療クリニック専務理事 兼 ハドソンランド会長' :
                            speaker.role === 'Managing Director' ? '専務取締役' : speaker.role) 
                         : speaker.role}
                       {speaker.organization 
@@ -383,7 +389,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                   
                   {/* TSI Logo */}
                   <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-50 border border-slate-100 group-hover:bg-slate-100 transition-colors">
-                    <TsiLogo size="lg" />
+                    <img src="/images/TSI-logo.png" alt="TSI Logo" className="h-10 sm:h-12 w-auto object-contain" />
                   </div>
 
                   {/* Sponsor Names List matching flyer */}
@@ -393,9 +399,6 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                     </div>
                     <div className="font-medium text-slate-700 tracking-tight leading-tight">
                       Hudsonland Bangladesh Ltd.
-                    </div>
-                    <div className="font-medium text-slate-700 tracking-tight leading-tight">
-                      Embassy of Bangladesh in Japan
                     </div>
                   </div>
 

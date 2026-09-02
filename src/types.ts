@@ -11,6 +11,7 @@ export interface Speaker {
   isKeynote?: boolean;
   photoUrl?: string;
   bio: string;
+  badge?: string;
   topic?: string;
   category: 'government' | 'diplomatic' | 'business' | 'education' | 'culture';
   speechTime?: string;

@@ -28,22 +28,13 @@ export const SEMINAR_DETAILS = {
 };
 
 export const SPEAKERS: Speaker[] = [
-  {
-    id: 'ichiro-aisawa',
-    name: 'Mr. Ichiro Aisawa',
-    nameJa: '逢沢 一郎 氏',
-    role: 'Member of the House of Representatives',
-    organization: 'Okayama 1st District',
-    category: 'government',
-    bio: 'Distinguished statesman representing Okayama 1st District in the House of Representatives of Japan. Former Senior Vice-Minister for Foreign Affairs, long-time champion of international exchange, youth education, and strengthening diplomatic ties between Japan and South Asian economies.',
-    topic: 'Welcome Address: Regional Vitalization through Japan-Bangladesh Strategic Cooperation',
-    speechTime: '14:05 – 14:15',
-  },
+
   {
     id: 'daud-ali',
     name: 'H.E. Mr. Md. Daud Ali',
-    nameJa: 'ダウド・アリ 閣下',
+    nameJa: 'H.E. Mr. Md. Daud Ali',
     role: 'Ambassador of Bangladesh to Japan',
+    badge: 'Chief Guest',
     organization: '',
     category: 'diplomatic',
     bio: 'Eminent diplomat leading the Bangladesh Mission in Tokyo. Devoted to advancing bilateral economic partnerships, promoting high-skilled human resource mobility, and establishing regional manufacturing and trade corridors between Japanese prefectures and Bangladesh.',
@@ -51,43 +42,9 @@ export const SPEAKERS: Speaker[] = [
     speechTime: '14:15 – 14:25',
   },
   {
-    id: 'zoynal-abedin',
-    name: 'Mr. Md. Zoynal Abedin',
-    nameJa: 'ゾイナル・アベディン 氏',
-    role: 'Counsellor (Labour & Welfare)',
-    organization: 'Embassy of Bangladesh in Tokyo',
-    category: 'diplomatic',
-    bio: 'Senior diplomatic officer specializing in economic diplomacy, bilateral labor agreements, student welfare, and technological collaboration between Bangladesh and Japanese regional industrial centers like Okayama.',
-    topic: 'Fostering Cultural Synergy and Higher Education Linkages',
-    speechTime: '14:25 – 14:35',
-  },
-  {
-    id: 'syed-mahmudul-huq',
-    name: 'Mr. Syed Mahmudul Huq',
-    nameJa: 'サイエド・マハムドゥル・ハク 氏',
-    role: 'Chairman',
-    organization: 'TSI Group, Bangladesh',
-    category: 'business',
-    bio: 'Prominent industrialist and business leader. Chairman of TSI Group, Bangladesh, with decades of expertise in international commerce, cross-border joint ventures, logistics, and fostering high-impact corporate partnerships between Japan and Bangladesh.',
-    topic: 'Bilateral Trade and Private Sector Opportunities in Emerging Sectors',
-    speechTime: '14:35 – 14:45',
-  },
-
-  {
-    id: 'yasuhiro-kawamoto',
-    name: 'Mr. Yasuhiro Kawamoto',
-    nameJa: '河本 保弘 氏',
-    role: 'CEO',
-    organization: 'ZenmiraiJapan Co., Ltd.',
-    category: 'business',
-    bio: 'Visionary entrepreneur spearheading global talent acquisition, professional placement, and human resource development pipelines. Dedicated to connecting talented Bangladeshi software engineers, technical interns, and skilled workers with Okayama businesses.',
-    topic: 'Building Sustainable Human Resource Pipelines: Okayama & Bangladesh',
-    speechTime: '14:55 – 15:05',
-  },
-  {
     id: 'hiroko-katayama',
     name: 'Ms. Hiroko Katayama',
-    nameJa: '片山 浩子 氏',
+    nameJa: 'Ms. Hiroko Katayama',
     role: 'Chairperson',
     organization: 'Okayama Gairo Gakuin',
     category: 'education',
@@ -96,9 +53,54 @@ export const SPEAKERS: Speaker[] = [
     speechTime: '15:05 – 15:15',
   },
   {
+    id: 'syed-mahmudul-huq',
+    name: 'Mr. Syed Mahmudul Huq',
+    nameJa: 'Mr. Syed Mahmudul Huq',
+    role: 'Chairman',
+    organization: 'TSI Group, Bangladesh',
+    category: 'business',
+    bio: 'Prominent industrialist and business leader. Chairman of TSI Group, Bangladesh, with decades of expertise in international commerce, cross-border joint ventures, logistics, and fostering high-impact corporate partnerships between Japan and Bangladesh.',
+    topic: 'Bilateral Trade and Private Sector Opportunities in Emerging Sectors',
+    speechTime: '14:35 – 14:45',
+  },
+  {
+    id: 'zoynal-abedin',
+    name: 'Mr. Md. Zoynal Abedin',
+    nameJa: 'Mr. Md. Zoynal Abedin',
+    role: 'Counsellor (Labour & Welfare)',
+    organization: 'Embassy of Bangladesh in Tokyo',
+    category: 'diplomatic',
+    bio: 'Senior diplomatic officer specializing in economic diplomacy, bilateral labor agreements, student welfare, and technological collaboration between Bangladesh and Japanese regional industrial centers like Okayama.',
+    topic: 'Fostering Cultural Synergy and Higher Education Linkages',
+    speechTime: '14:25 – 14:35',
+  },
+  {
+    id: 'seiji-ishimoto',
+    name: 'Mr. Seiji Ishimoto',
+    nameJa: 'Mr. Seiji Ishimoto',
+    role: 'WOMC Executive Director, West-Okayama Medical Clinic & Chairman, Hudsonland',
+    organization: '',
+    category: 'business',
+    bio: 'Prominent executive in the healthcare and medical sector. Currently serving as WOMC Executive Director at the West-Okayama Medical clinic and Chairman of Hudsonland. He is dedicated to advancing global healthcare standards and exploring bilateral collaboration opportunities in medical technologies and human resources.',
+    topic: 'Healthcare Collaboration and Talent Development Between Japan and Bangladesh',
+    speechTime: '14:45 – 14:55',
+  },
+
+  {
+    id: 'yasuhiro-kawamoto',
+    name: 'Mr. Yasuhiro Kawamoto',
+    nameJa: 'Mr. Yasuhiro Kawamoto',
+    role: 'CEO',
+    organization: 'ZenmiraiJapan Co., Ltd.',
+    category: 'business',
+    bio: 'Visionary entrepreneur spearheading global talent acquisition, professional placement, and human resource development pipelines. Dedicated to connecting talented Bangladeshi software engineers, technical interns, and skilled workers with Okayama businesses.',
+    topic: 'Building Sustainable Human Resource Pipelines: Okayama & Bangladesh',
+    speechTime: '14:55 – 15:05',
+  },
+  {
     id: 'syed-ruhul-huq',
     name: 'SYED RUHUL HUQ',
-    nameJa: 'サイエド・ルフル・ハク 氏',
+    nameJa: 'SYED RUHUL HUQ',
     role: 'Managing Director',
     organization: 'TSI Limited',
     isKeynote: true,
@@ -121,11 +123,11 @@ export const AGENDA_SESSIONS: AgendaSession[] = [
   },
   {
     time: '14:00 – 14:15',
-    title: 'Opening Ceremony & Parliamentary Welcome',
-    speakerIds: ['ichiro-aisawa'],
+    title: 'Opening Ceremony',
+    speakerIds: [],
     theme: 'general',
     description:
-      'Official opening greetings by seminar organizers followed by special welcome address from Honorable Mr. Ichiro Aisawa, Member of the House of Representatives.',
+      'Official opening greetings and welcome address by seminar organizers.',
     room: 'International Conference Hall',
   },
   {
@@ -176,7 +178,7 @@ export const AGENDA_SESSIONS: AgendaSession[] = [
   {
     time: '16:00 – 16:30',
     title: 'Exclusive B2B Exchange & Academic Networking Reception',
-    speakerIds: ['ichiro-aisawa', 'daud-ali', 'syed-ruhul-huq', 'yasuhiro-kawamoto'],
+    speakerIds: ['daud-ali', 'syed-ruhul-huq', 'yasuhiro-kawamoto'],
     theme: 'business',
     description:
       'Informal networking reception with light Japanese and Bangladeshi refreshments, one-on-one business matchmaking, student consultations, and media interviews.',
@@ -212,15 +214,7 @@ export const SPONSORS: Sponsor[] = [
     logoText: 'HUDSONLAND',
     websiteUrl: 'https://hudsonland.com',
   },
-  {
-    name: 'Embassy of Bangladesh in Japan',
-    role: 'Patronage & Diplomatic Support',
-    description:
-      'The diplomatic mission of Bangladesh in Tokyo, actively promoting friendship, educational exchange, bilateral commercial partnerships, and welfare of the Bangladeshi diaspora in Japan.',
-    type: 'embassy',
-    logoText: 'BANGLADESH EMBASSY',
-    websiteUrl: 'https://tokyo.mofa.gov.bd',
-  },
+
 ];
 
 export const SEMINAR_THEMES = [
