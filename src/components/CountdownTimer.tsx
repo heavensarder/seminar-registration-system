@@ -48,7 +48,7 @@ export const CountdownTimer: React.FC = () => {
             <div className="text-xs uppercase font-extrabold tracking-widest text-[#79ded7]">
               Seminar Countdown
             </div>
-            <div className="font-headline text-base sm:text-lg lg:text-xl font-extrabold uppercase tracking-wide text-white md:whitespace-nowrap">
+            <div className="font-headline text-xs sm:text-lg lg:text-xl font-extrabold uppercase tracking-wide text-white whitespace-nowrap">
               Saturday, September 19, 2026 • 14:00 JST
             </div>
           </div>
