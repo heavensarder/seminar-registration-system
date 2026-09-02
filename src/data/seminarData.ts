@@ -72,17 +72,7 @@ export const SPEAKERS: Speaker[] = [
     topic: 'Bilateral Trade and Private Sector Opportunities in Emerging Sectors',
     speechTime: '14:35 – 14:45',
   },
-  {
-    id: 'kyohei-yamamoto',
-    name: 'Mr. Kyohei Yamamoto',
-    nameJa: '山本 恭平 氏',
-    role: 'Executive Director, TSI Limited, Bangladesh &',
-    organization: 'Former Deputy Head, PR & Cultural Section, Embassy of Japan in Bangladesh',
-    category: 'culture',
-    bio: 'Renowned cultural diplomat and educator who served extensively at the Embassy of Japan in Dhaka. Expert in Japanese language pedagogy, cross-cultural training, and bridging educational aspirations of Bangladeshi youth with Japanese institutional standards.',
-    topic: 'Japanese Language Education and Cultural Adaptation for Youth Success in Japan',
-    speechTime: '14:45 – 14:55',
-  },
+
   {
     id: 'yasuhiro-kawamoto',
     name: 'Mr. Yasuhiro Kawamoto',
@@ -150,7 +140,7 @@ export const AGENDA_SESSIONS: AgendaSession[] = [
   {
     time: '14:35 – 15:05',
     title: 'Panel Session 1: Study in Japan & Japanese Language Education',
-    speakerIds: ['hiroko-katayama', 'kyohei-yamamoto'],
+    speakerIds: ['hiroko-katayama'],
     theme: 'study',
     description:
       'Exploration of university degree programs, language schooling in Okayama, MEXT and private scholarships, student visa support, and cultural immersion strategies for Bangladeshi students.',
