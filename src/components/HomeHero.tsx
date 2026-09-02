@@ -18,7 +18,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
   onOpenTheme,
   onOpenOrganizer,
 }) => {
-  const [isJa, setIsJa] = useState(false);
+  const [isJa, setIsJa] = useState(true);
 
   return (
     <div className="relative overflow-hidden bg-[#052322] py-4 sm:py-8">
