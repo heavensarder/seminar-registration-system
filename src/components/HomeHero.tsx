@@ -393,11 +393,13 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                   </div>
 
                   {/* Sponsor Names List matching flyer */}
-                  <div className="space-y-1 text-xs text-left">
-                    <div className="font-medium text-slate-900 tracking-tight leading-tight">
+                  <div className="flex flex-col gap-2 text-xs text-left pl-1">
+                    <div className="flex items-center gap-1.5 font-bold text-slate-900 tracking-tight leading-tight">
+                      <div className="w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></div>
                       Zenmirai Japan
                     </div>
-                    <div className="font-medium text-slate-700 tracking-tight leading-tight">
+                    <div className="flex items-center gap-1.5 font-bold text-slate-900 tracking-tight leading-tight">
+                      <div className="w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></div>
                       Hudsonland Bangladesh Ltd.
                     </div>
                   </div>
