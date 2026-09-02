@@ -234,7 +234,9 @@ app.patch('/api/registrations/:id/status', async (req, res) => {
     
     let emailSent = false;
     if (status === 'Confirmed' && user && user.status !== 'Confirmed') {
-      const serialPassId = `Kizuna ${3000 + parseInt(id)}`;
+      const [countResult] = await pool.query("SELECT COUNT(*) as count FROM registrations WHERE status = 'Confirmed'");
+      const confirmedCount = countResult[0].count;
+      const serialPassId = `Kizuna ${3000 + confirmedCount}`;
       emailSent = await sendConfirmationEmail(user.email, user.fullName, serialPassId);
     }
 
