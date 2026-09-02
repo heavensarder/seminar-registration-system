@@ -213,7 +213,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                   {/* Speaker Name & Designation */}
                   <div className="flex flex-wrap items-baseline gap-x-2 text-left min-w-0">
                     <span className="font-headline font-bold text-white text-xs sm:text-sm md:text-base tracking-wide">
-                      {isJa && speaker.nameJa ? speaker.nameJa : speaker.name},
+                      {speaker.name},
                     </span>
                     <span className="text-xs sm:text-sm text-[#d4f2f0] font-normal truncate">
                       {isJa 
@@ -260,7 +260,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                   {/* Keynote Name & Title */}
                   <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-baseline items-center gap-x-2 px-2 text-center sm:text-left min-w-0">
                     <span className="font-headline font-black text-[#083331] text-sm sm:text-base md:text-lg tracking-wide uppercase">
-                      {isJa && keynote.nameJa ? keynote.nameJa : keynote.name},
+                      {keynote.name},
                     </span>
                     <span className="text-xs sm:text-sm text-[#0f4e4b] font-semibold">
                       {isJa ? (keynote.role === 'Managing Director' ? '専務取締役' : keynote.role) : keynote.role}, {isJa ? (keynote.organization === 'TSI Limited' ? 'TSIリミテッド' : keynote.organization) : keynote.organization}

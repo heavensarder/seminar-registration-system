@@ -15,7 +15,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Serve static files from the React frontend build
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -60,7 +61,7 @@ async function initDb() {
       CREATE TABLE IF NOT EXISTS settings (
         id INT AUTO_INCREMENT PRIMARY KEY,
         settingKey VARCHAR(100) UNIQUE NOT NULL,
-        settingValue TEXT,
+        settingValue LONGTEXT,
         updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);

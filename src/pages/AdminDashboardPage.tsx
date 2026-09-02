@@ -51,12 +51,10 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onLogout
   const totalRegistrations = registrations.length;
   const confirmedCount = registrations.filter(r => r.status === 'Confirmed').length;
   const pendingCount = registrations.filter(r => r.status === 'Pending').length;
-  const vipCount = registrations.filter(r => r.seatZone?.includes('VIP')).length;
 
   const stats = [
     { title: 'Total Registrations', value: totalRegistrations.toString(), icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20' },
     { title: 'Confirmed Attendees', value: confirmedCount.toString(), icon: CheckCircle2, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
-    { title: 'VIP Seats Assigned', value: vipCount.toString(), icon: Ticket, color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/20' },
     { title: 'Pending Review', value: pendingCount.toString(), icon: AlertCircle, color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20' },
   ];
 
