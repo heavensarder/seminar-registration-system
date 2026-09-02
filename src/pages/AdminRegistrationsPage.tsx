@@ -120,7 +120,7 @@ export const AdminRegistrationsPage: React.FC<AdminRegistrationsPageProps> = ({ 
                     <tr key={reg.id} className="hover:bg-white/5 transition-colors border-b border-[#16605b]/20 last:border-0 group">
                       <td className="px-6 py-4 font-mono text-xs font-semibold">
                         {reg.status === 'Confirmed' ? (
-                          <span className="text-[#79ded7]">Kizuna {3000 + reg.id}</span>
+                          <span className="text-[#79ded7]">{reg.passId || `Kizuna ${3000 + reg.id}`}</span>
                         ) : (
                           <span className="text-teal-100/30 italic">Generated on Confirm</span>
                         )}

@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 // Data mapping utility to flatten registration objects
 const mapRegistrationsToData = (registrations: any[]) => {
   return registrations.map(reg => ({
-    'Serial Pass ID': `Kizuna ${3000 + reg.id}`,
+    'Serial Pass ID': reg.passId || `Kizuna ${3000 + reg.id}`,
     'Full Name': reg.fullName,
     'Email': reg.email,
     'Phone': reg.phone,

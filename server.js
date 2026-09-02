@@ -52,6 +52,7 @@ async function initDb() {
         languagePreference VARCHAR(10),
         seatZone VARCHAR(100),
         qrValue VARCHAR(255),
+        passId VARCHAR(50) DEFAULT NULL,
         status ENUM('Confirmed', 'Pending', 'Hold', 'Rejected') DEFAULT 'Pending',
         registeredAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
@@ -65,6 +66,13 @@ async function initDb() {
         updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);
+    
+    try {
+      await connection.query('ALTER TABLE registrations ADD COLUMN passId VARCHAR(50) DEFAULT NULL');
+    } catch(e) {
+      // Column might already exist
+    }
+
     console.log('Database initialized successfully.');
     connection.release();
   } catch (error) {
@@ -234,9 +242,10 @@ app.patch('/api/registrations/:id/status', async (req, res) => {
     
     let emailSent = false;
     if (status === 'Confirmed' && user && user.status !== 'Confirmed') {
-      const [countResult] = await pool.query("SELECT COUNT(*) as count FROM registrations WHERE status = 'Confirmed'");
+      const [countResult] = await pool.query("SELECT COUNT(*) as count FROM registrations WHERE status = 'Confirmed' AND passId IS NOT NULL");
       const confirmedCount = countResult[0].count;
-      const serialPassId = `Kizuna ${3000 + confirmedCount}`;
+      const serialPassId = `Kizuna ${3001 + confirmedCount}`;
+      await pool.query('UPDATE registrations SET passId = ? WHERE id = ?', [serialPassId, id]);
       emailSent = await sendConfirmationEmail(user.email, user.fullName, serialPassId);
     }
 

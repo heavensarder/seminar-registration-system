@@ -138,7 +138,7 @@ export const AdminConfirmedPage: React.FC<AdminConfirmedPageProps> = ({ onLogout
                   registrations.map((reg) => (
                     <tr key={reg.id} className="hover:bg-white/5 transition-colors border-b border-[#16605b]/20 last:border-0 group">
                       <td className="px-6 py-4 font-mono text-[#79ded7] text-xs font-semibold">
-                        Kizuna {3000 + reg.id}
+                        {reg.passId || `Kizuna ${3000 + reg.id}`}
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-white font-medium">{reg.fullName}</div>
