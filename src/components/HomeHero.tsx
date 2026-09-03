@@ -232,7 +232,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                                   speaker.role === 'CEO' ? 'CEO' :
                                     speaker.role === 'Chairperson' ? '理事長' :
                                       speaker.role === 'WOMC Executive Director, West-Okayama Medical Clinic & Chairman, Hudsonland' ? '西岡山医療クリニック専務理事 兼 ハドソンランド会長' :
-                                        speaker.role === 'Managing Director' ? '専務取締役' : speaker.role)
+                                        speaker.role === 'Managing Director' ? '代表取締役' : speaker.role)
                         : speaker.role}
                       {speaker.organization
                         ? `, ${isJa
@@ -271,7 +271,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                       {keynote.name},
                     </span>
                     <span className="text-xs sm:text-sm text-[#0f4e4b] font-semibold">
-                      {isJa ? (keynote.role === 'Managing Director' ? '専務取締役' : keynote.role) : keynote.role}, {isJa ? (keynote.organization === 'TSI Limited' ? 'TSIリミテッド' : keynote.organization) : keynote.organization}
+                      {isJa ? (keynote.role === 'Managing Director' ? '代表取締役' : keynote.role) : keynote.role}, {isJa ? (keynote.organization === 'TSI Limited' ? 'TSIリミテッド' : keynote.organization) : keynote.organization}
                     </span>
                   </div>
 
