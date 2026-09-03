@@ -50,7 +50,7 @@ export const SPEAKERS: Speaker[] = [
   {
     id: 'hiroko-katayama',
     name: 'Ms. Hiroko Katayama',
-    nameJa: '片山 浩子 氏',
+    nameJa: '片山浩子',
     role: 'Chairperson',
     roleJa: '理事長',
     organization: 'Okayama Institute of Languages',
@@ -95,7 +95,7 @@ export const SPEAKERS: Speaker[] = [
   {
     id: 'seiji-ishimoto',
     name: 'Mr. Seiji Ishimoto',
-    nameJa: '石本 誠二 氏',
+    nameJa: '石本政ニ',
     role: 'WOMC Executive Director, West-Okayama Medical Clinic & Chairman, Hudsonland',
     roleJa: '西岡山医療クリニック 専務理事 兼 Hudsonland 会長',
     organization: '',
@@ -111,7 +111,7 @@ export const SPEAKERS: Speaker[] = [
   {
     id: 'yasuhiro-kawamoto',
     name: 'Mr. Yasuhiro Kawamoto',
-    nameJa: '河本 泰弘 氏',
+    nameJa: '川元康裕',
     role: 'CEO',
     roleJa: 'CEO',
     organization: 'ZenmiraiJapan Co., Ltd.',
