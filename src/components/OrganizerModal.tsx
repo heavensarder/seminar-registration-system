@@ -57,10 +57,10 @@ export const OrganizerModal: React.FC<OrganizerModalProps> = ({ isOpen, onClose,
                   )}
                   <div>
                     <h3 className="font-bold text-[#083331] text-sm sm:text-base">
-                      {org.name}
+                      {isJa && org.nameJa ? org.nameJa : org.name}
                     </h3>
                     <span className="inline-block text-[11px] font-bold text-[#0d534e] uppercase tracking-wider">
-                      {org.role}
+                      {isJa && org.roleJa ? org.roleJa : org.role}
                     </span>
                   </div>
                 </div>
@@ -73,7 +73,7 @@ export const OrganizerModal: React.FC<OrganizerModalProps> = ({ isOpen, onClose,
               </div>
 
               <p className="text-slate-600 text-xs sm:text-sm leading-relaxed pt-1">
-                {org.description}
+                {isJa && org.descriptionJa ? org.descriptionJa : org.description}
               </p>
             </div>
           ))}

@@ -52,10 +52,10 @@ export const VenueModal: React.FC<VenueModalProps> = ({ isOpen, onClose, isJa = 
               {SEMINAR_DETAILS.venue.name} ({SEMINAR_DETAILS.venue.japaneseName})
             </div>
             <p className="text-slate-600 text-xs sm:text-sm">
-              {SEMINAR_DETAILS.venue.address}
+              {isJa ? SEMINAR_DETAILS.venue.japaneseAddress : SEMINAR_DETAILS.venue.address}
             </p>
             <div className="inline-block px-2.5 py-1 rounded-lg bg-white border border-[#b2e5e1] text-[#083331] font-semibold text-xs mt-1">
-              📍 {SEMINAR_DETAILS.venue.hall}
+              📍 {isJa ? SEMINAR_DETAILS.venue.japaneseHall : SEMINAR_DETAILS.venue.hall}
             </div>
           </div>
 

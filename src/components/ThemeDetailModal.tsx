@@ -40,7 +40,7 @@ export const ThemeDetailModal: React.FC<ThemeDetailModalProps> = ({
                 {isJa ? 'セミナーの柱' : 'Seminar Pillar'}
               </span>
               <h2 className="font-headline text-xl sm:text-2xl font-extrabold uppercase tracking-wide">
-                {theme.title}
+                {isJa && (theme as any).titleJa ? (theme as any).titleJa : theme.title}
               </h2>
             </div>
           </div>
@@ -58,10 +58,10 @@ export const ThemeDetailModal: React.FC<ThemeDetailModalProps> = ({
         <div className="p-6 overflow-y-auto space-y-5 text-xs sm:text-sm text-slate-700">
           <div>
             <h3 className="font-bold text-[#083331] text-sm sm:text-base mb-1">
-              {theme.subtitle}
+              {isJa && (theme as any).subtitleJa ? (theme as any).subtitleJa : theme.subtitle}
             </h3>
             <p className="leading-relaxed text-slate-600">
-              {theme.description}
+              {isJa && (theme as any).descriptionJa ? (theme as any).descriptionJa : theme.description}
             </p>
           </div>
 
@@ -71,7 +71,7 @@ export const ThemeDetailModal: React.FC<ThemeDetailModalProps> = ({
               {isJa ? '主な論点と機会' : 'Key Discussion Points & Opportunities'}
             </div>
             <div className="space-y-2">
-              {theme.highlights.map((highlight, idx) => (
+              {(isJa && (theme as any).highlightsJa ? (theme as any).highlightsJa : theme.highlights).map((highlight: string, idx: number) => (
                 <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
                   <CheckCircle2 className="w-4 h-4 text-[#e62b32] shrink-0 mt-0.5" />
                   <span>{highlight}</span>

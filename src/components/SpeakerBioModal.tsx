@@ -33,7 +33,8 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
               {isJa && speaker.nameJa ? speaker.nameJa : speaker.name}
             </h2>
             <p className="text-xs sm:text-sm text-[#9ce7e2] font-medium mt-0.5">
-              {speaker.role}{speaker.organization ? ` • ${speaker.organization}` : ''}
+              {isJa && speaker.roleJa ? speaker.roleJa : speaker.role}
+              {speaker.organization ? ` • ${isJa && speaker.organizationJa ? speaker.organizationJa : speaker.organization}` : ''}
             </p>
           </div>
 
@@ -56,7 +57,7 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
                 <span>{isJa ? '講演・ディスカッショントピック' : 'Presentation & Discussion Topic'}</span>
               </div>
               <p className="font-bold text-[#083331] text-sm leading-snug">
-                "{speaker.topic}"
+                "{isJa && speaker.topicJa ? speaker.topicJa : speaker.topic}"
               </p>
 
             </div>
@@ -68,7 +69,7 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
               {isJa ? '略歴と背景' : 'Biography & Leadership Background'}
             </h3>
             <p className="leading-relaxed text-slate-600 text-sm">
-              {speaker.bio}
+              {isJa && speaker.bioJa ? speaker.bioJa : speaker.bio}
             </p>
           </div>
 

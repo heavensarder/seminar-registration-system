@@ -7,12 +7,16 @@ export interface Speaker {
   name: string;
   nameJa?: string;
   role: string;
+  roleJa?: string;
   organization: string;
+  organizationJa?: string;
   isKeynote?: boolean;
   photoUrl?: string;
   bio: string;
+  bioJa?: string;
   badge?: string;
   topic?: string;
+  topicJa?: string;
   category: 'government' | 'diplomatic' | 'business' | 'education' | 'culture';
   speechTime?: string;
 }
@@ -20,9 +24,11 @@ export interface Speaker {
 export interface AgendaSession {
   time: string;
   title: string;
+  titleJa?: string;
   speakerIds: string[];
   theme: 'general' | 'study' | 'human-resources' | 'business';
   description: string;
+  descriptionJa?: string;
   room?: string;
 }
 
@@ -50,8 +56,11 @@ export interface ConfirmedTicket {
 
 export interface Sponsor {
   name: string;
+  nameJa?: string;
   role: string;
+  roleJa?: string;
   description: string;
+  descriptionJa?: string;
   type: 'host' | 'sponsor' | 'partner' | 'embassy';
   logoText: string;
   websiteUrl?: string;
