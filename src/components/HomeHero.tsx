@@ -72,7 +72,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
 
             {/* Kizuna 2026 Script Branding with Red Accent Bar */}
             <div className="flex items-center justify-center gap-3 mb-2 relative z-10 pt-4 sm:pt-0">
-              <div className="hidden sm:block w-1.5 h-11 bg-[#e62b32] rounded-full shrink-0"></div>
+              {/* <div className="hidden sm:block w-1.5 h-11 bg-[#e62b32] rounded-full shrink-0"></div> */}
               <div className="relative">
                 <span className="font-script text-4xl sm:text-5xl md:text-6xl text-[#e62b32] font-bold tracking-wide select-none drop-shadow-sm">
                   Kizuna 2026
