@@ -9,6 +9,8 @@ interface HomeHeroProps {
   onOpenVenue: () => void;
   onOpenTheme: (themeId: string) => void;
   onOpenOrganizer: () => void;
+  isJa?: boolean;
+  onToggleLanguage?: () => void;
 }
 
 export const HomeHero: React.FC<HomeHeroProps> = ({
@@ -17,9 +19,9 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
   onOpenVenue,
   onOpenTheme,
   onOpenOrganizer,
+  isJa = true,
+  onToggleLanguage,
 }) => {
-  const [isJa, setIsJa] = useState(true);
-
   return (
     <div className="relative overflow-hidden bg-[#052322] py-4 sm:py-8">
       {/* Main Poster Container */}
@@ -27,7 +29,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
         {/* Language Toggle Button */}
         <div className="absolute top-4 right-4 sm:top-2 sm:right-8 z-50">
           <button
-            onClick={() => setIsJa(!isJa)}
+            onClick={onToggleLanguage}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-white text-xs font-bold transition-colors backdrop-blur-sm shadow-lg cursor-pointer"
           >
             <Languages className="w-4 h-4" />
@@ -37,12 +39,12 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
 
         {/* POSTER FLYER CANVAS - EXACT COLOR SCHEMA MATCHING FLYER */}
         <div className="relative bg-[#083331] text-white rounded-3xl shadow-2xl shadow-black/60 overflow-hidden border border-[#165a55] print:border-none print:shadow-none print:rounded-none">
-          
+
           {/* ======================================================== */}
           {/* TOP SECTION: Deep Forest Teal with Castle Watermark       */}
           {/* ======================================================== */}
           <div className="relative bg-gradient-to-b from-[#072d2b] to-[#0c403d] p-6 sm:p-10 lg:p-12 pb-14 sm:pb-16 overflow-hidden">
-            
+
             {/* Japanese Pagoda / Okayama Castle Silhouette Watermark in Top Right */}
             <div className="absolute -top-6 -right-6 w-72 sm:w-96 h-72 sm:h-96 opacity-15 pointer-events-none select-none">
               <svg viewBox="0 0 200 200" className="w-full h-full text-emerald-100" fill="currentColor">
@@ -96,14 +98,14 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
 
             {/* Overview Description Box */}
             <p className="mt-6 text-xs sm:text-sm text-[#f0fbfb] leading-relaxed max-w-3xl font-normal relative z-10 text-center mx-auto">
-              {isJa 
-                ? 'バングラデシュは、若く優秀な人材を擁し、急速な成長を続けています。日本への留学、日本語教育、高度人材の育成から、ビジネスや貿易の機会まで、本セミナーでは、岡山とバングラデシュが教育、人材、ビジネスの分野でどのように協力し、明るい未来を築くことができるかを探ります。' 
+              {isJa
+                ? 'バングラデシュは、若く優秀な人材を擁し、急速な成長を続けています。日本への留学、日本語教育、高度人材の育成から、ビジネスや貿易の機会まで、本セミナーでは、岡山とバングラデシュが教育、人材、ビジネスの分野でどのように協力し、明るい未来を築くことができるかを探ります。'
                 : 'Bangladesh continues its rapid growth with a young and talented population. From study in Japan, Japanese language education, skilled workforce development, to business and trade opportunities—this seminar will explore how Okayama and Bangladesh can work together in education, human resources, and business for a brighter future.'}
             </p>
 
             {/* 3 Event Detail Columns with Circular Icons */}
             <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 md:items-start justify-items-center">
-              
+
               {/* DATE - Red circle with white calendar */}
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-4 text-center sm:text-left w-full md:w-auto">
                 <div className="w-12 h-12 rounded-full bg-[#e62b32] flex items-center justify-center text-white shrink-0 shadow-md mt-0.5">
@@ -138,7 +140,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
               </div>
 
               {/* VENUE - White circle with red map pin */}
-              <div 
+              <div
                 className="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-4 text-center sm:text-left"
               >
                 <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#e62b32] shrink-0 shadow-md mt-0.5">
@@ -172,7 +174,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
           {/* MIDDLE SECTION: Seafoam / Mint Gradient with Guest Speakers */}
           {/* ======================================================== */}
           <div className="relative bg-gradient-to-b from-[#cae7e5] via-[#aed8d5] to-[#7dbcb9] p-6 sm:p-10 lg:p-12 text-[#053733]">
-            
+
             {/* Harbor / Port Cargo Silhouette Subtle Watermark */}
             <div className="absolute inset-0 opacity-10 pointer-events-none select-none flex items-center justify-center">
               <svg viewBox="0 0 800 400" className="w-full h-full text-[#083331]" fill="currentColor">
@@ -221,27 +223,27 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                       )}
                     </span>
                     <span className="text-xs sm:text-sm text-[#d4f2f0] font-normal truncate">
-                      {isJa 
-                        ? (speaker.role === 'Member of the House of Representatives' ? '衆議院議員' : 
-                           speaker.role === 'Ambassador of Bangladesh to Japan' ? '駐日バングラデシュ大使' : 
-                           speaker.role === 'Counsellor (Labour & Welfare)' ? '参事官（労働・福祉）' : 
-                           speaker.role === 'Chairman' ? '会長' : 
-                           speaker.role === 'Executive Director, TSI Limited, Bangladesh &' ? 'TSIリミテッド バングラデシュ 専務取締役 兼' : 
-                           speaker.role === 'CEO' ? 'CEO' : 
-                           speaker.role === 'Chairperson' ? '理事長' : 
-                           speaker.role === 'WOMC Executive Director, West-Okayama Medical Clinic & Chairman, Hudsonland' ? '西岡山医療クリニック専務理事 兼 ハドソンランド会長' :
-                           speaker.role === 'Managing Director' ? '専務取締役' : speaker.role) 
+                      {isJa
+                        ? (speaker.role === 'Member of the House of Representatives' ? '衆議院議員' :
+                          speaker.role === 'Ambassador of Bangladesh to Japan' ? '駐日バングラデシュ大使' :
+                            speaker.role === 'Counsellor (Labour & Welfare)' ? '参事官（労働・福祉）' :
+                              speaker.role === 'Chairman' ? '会長' :
+                                speaker.role === 'Executive Director, TSI Limited, Bangladesh &' ? 'TSIリミテッド バングラデシュ 専務取締役 兼' :
+                                  speaker.role === 'CEO' ? 'CEO' :
+                                    speaker.role === 'Chairperson' ? '理事長' :
+                                      speaker.role === 'WOMC Executive Director, West-Okayama Medical Clinic & Chairman, Hudsonland' ? '西岡山医療クリニック専務理事 兼 ハドソンランド会長' :
+                                        speaker.role === 'Managing Director' ? '専務取締役' : speaker.role)
                         : speaker.role}
-                      {speaker.organization 
-                        ? `, ${isJa 
-                            ? (speaker.organization === 'Okayama 1st District' ? '岡山1区' :
-                               speaker.organization === 'Embassy of Bangladesh in Tokyo' ? '在東京バングラデシュ大使館' :
-                               speaker.organization === 'TSI Group, Bangladesh' ? 'TSIグループ・バングラデシュ' :
-                               speaker.organization === 'Former Deputy Head, PR & Cultural Section, Embassy of Japan in Bangladesh' ? '元 在バングラデシュ日本国大使館 広報文化部長' :
-                               speaker.organization === 'ZenmiraiJapan Co., Ltd.' ? '株式会社ZenmiraiJapan' :
-                               speaker.organization === 'Okayama Gairo Gakuin' ? '岡山外語学院' :
-                               speaker.organization === 'TSI Limited' ? 'TSIリミテッド' : speaker.organization)
-                            : speaker.organization}` 
+                      {speaker.organization
+                        ? `, ${isJa
+                          ? (speaker.organization === 'Okayama 1st District' ? '岡山1区' :
+                            speaker.organization === 'Embassy of Bangladesh in Tokyo' ? '在東京バングラデシュ大使館' :
+                              speaker.organization === 'TSI Group, Bangladesh' ? 'TSIグループ・バングラデシュ' :
+                                speaker.organization === 'Former Deputy Head, PR & Cultural Section, Embassy of Japan in Bangladesh' ? '元 在バングラデシュ日本国大使館 広報文化部長' :
+                                  speaker.organization === 'ZenmiraiJapan Co., Ltd.' ? '株式会社ZenmiraiJapan' :
+                                    speaker.organization === 'Okayama Institute of Languages' ? '岡山外語学院' :
+                                      speaker.organization === 'TSI Limited' ? 'TSIリミテッド' : speaker.organization)
+                          : speaker.organization}`
                         : ''}
                     </span>
                   </div>
@@ -260,7 +262,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                 >
                   {/* Red Rounded Capsule Badge */}
                   <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-[#e62b32] text-white text-xs sm:text-sm font-headline font-bold uppercase tracking-wider shrink-0 shadow-xs text-center sm:text-left w-full sm:w-auto">
-                    {isJa ? '基調講演 & プレゼンター' : 'KEYNOTE SPEAKER & PRESENTER'}
+                    {isJa ? '基調講演者・発表者' : 'KEYNOTE SPEAKER & PRESENTER'}
                   </div>
 
                   {/* Keynote Name & Title */}
@@ -284,7 +286,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
           {/* LOWER SECTION: Deep Forest Teal with Seminar Themes      */}
           {/* ======================================================== */}
           <div className="p-6 sm:p-10 lg:p-12 border-t border-[#1a645f] bg-gradient-to-b from-[#0d4643] to-[#072f2d] text-white">
-            
+
             {/* Header: SEMINAR THEMES (Italic white font) */}
             <div className="text-center mb-8">
               <h2 className="font-headline text-3xl sm:text-4xl font-black italic text-white uppercase tracking-tight">
@@ -294,7 +296,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
 
             {/* 3 Columns separated by vertical white hairline dividers */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 max-w-3xl mx-auto items-center">
-              
+
               {/* THEME 1: STUDY IN JAPAN */}
               <div
                 onClick={() => onOpenTheme('study')}
@@ -320,7 +322,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                 </div>
                 <div className="text-center md:text-left">
                   <h3 className="font-headline text-lg font-black text-white uppercase tracking-wide leading-tight group-hover:text-[#9feae4]">
-                    {isJa ? '人材' : <><span className="hidden md:inline">HUMAN RESOURCES</span><span className="md:hidden">HUMAN</span><span className="md:hidden block">RESOURCES</span></>}
+                    {isJa ? '人材交流' : <><span className="hidden md:inline">HUMAN RESOURCES</span><span className="md:hidden">HUMAN</span><span className="md:hidden block">RESOURCES</span></>}
                   </h3>
                 </div>
               </div>
@@ -348,7 +350,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
           {/* ======================================================== */}
           <div className="p-6 sm:p-10 lg:p-12 bg-[#052624] border-t border-[#13504c]">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch max-w-4xl mx-auto">
-              
+
               {/* LEFT CARD: REGISTER NOW (BUTTON ONLY) */}
               <div className="flex flex-col justify-between items-center p-5 sm:p-6 rounded-3xl bg-[#083331] border border-[#16605b] shadow-xl text-center">
                 <div className="space-y-2.5 flex flex-col items-center">
@@ -376,7 +378,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
               </div>
 
               {/* RIGHT CARD: Host & Sponsors Card */}
-              <div 
+              <div
                 onClick={onOpenOrganizer}
                 className="bg-white text-slate-900 rounded-3xl p-5 sm:p-6 shadow-xl border border-slate-200 cursor-pointer hover:border-teal-400 transition-colors flex flex-col justify-between group"
                 title={isJa ? "主催と協賛の詳細を見る" : "Click to view host and sponsors details"}
@@ -386,7 +388,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 items-center">
-                  
+
                   {/* TSI Logo */}
                   <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-50 border border-slate-100 group-hover:bg-slate-100 transition-colors">
                     <img src="/images/TSI-logo.png" alt="TSI Logo" className="h-10 sm:h-12 w-auto object-contain" />

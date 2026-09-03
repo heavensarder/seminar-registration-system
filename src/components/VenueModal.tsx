@@ -5,9 +5,10 @@ import { SEMINAR_DETAILS } from '../data/seminarData';
 interface VenueModalProps {
   isOpen: boolean;
   onClose: () => void;
+  isJa?: boolean;
 }
 
-export const VenueModal: React.FC<VenueModalProps> = ({ isOpen, onClose }) => {
+export const VenueModal: React.FC<VenueModalProps> = ({ isOpen, onClose, isJa = false }) => {
   if (!isOpen) return null;
 
   return (
@@ -22,10 +23,10 @@ export const VenueModal: React.FC<VenueModalProps> = ({ isOpen, onClose }) => {
             </div>
             <div>
               <h2 className="font-headline text-lg sm:text-xl font-bold uppercase tracking-wide">
-                Venue &amp; Access Guide
+                {isJa ? '会場とアクセス案内' : 'Venue & Access Guide'}
               </h2>
               <p className="text-xs text-[#9ce7e2] font-medium">
-                {SEMINAR_DETAILS.venue.name}
+                {isJa ? SEMINAR_DETAILS.venue.japaneseName : SEMINAR_DETAILS.venue.name}
               </p>
             </div>
           </div>
@@ -45,7 +46,7 @@ export const VenueModal: React.FC<VenueModalProps> = ({ isOpen, onClose }) => {
           {/* Main Address Card */}
           <div className="bg-[#f0fbfb] border border-[#b2e5e1] rounded-2xl p-4 space-y-2">
             <div className="text-[11px] font-bold text-[#0d4643] uppercase tracking-wider">
-              Exact Location &amp; Hall
+              {isJa ? '詳細な場所とホール' : 'Exact Location & Hall'}
             </div>
             <div className="font-bold text-[#083331] text-base">
               {SEMINAR_DETAILS.venue.name} ({SEMINAR_DETAILS.venue.japaneseName})
@@ -61,17 +62,17 @@ export const VenueModal: React.FC<VenueModalProps> = ({ isOpen, onClose }) => {
           {/* Access Directions */}
           <div className="space-y-3">
             <h3 className="font-bold text-[#083331] text-xs uppercase tracking-wider">
-              Transit &amp; Walking Directions
+              {isJa ? '交通アクセスと徒歩での行き方' : 'Transit & Walking Directions'}
             </h3>
             
             <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800">
               <Train className="w-5 h-5 text-[#e62b32] shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold text-[#083331] block text-xs sm:text-sm">
-                  3-Minute Walk from JR Okayama Station
+                  {isJa ? 'JR岡山駅から徒歩3分' : '3-Minute Walk from JR Okayama Station'}
                 </span>
                 <span className="text-xs text-slate-600 mt-0.5 block">
-                  Exit via the West Exit (西口 / Nishi-guchi) on the 2F concourse. Cross the pedestrian deck toward the Hokan-cho district. The center is adjacent to the station plaza.
+                  {isJa ? '2階コンコースの西口を出て、奉還町方面へ横断歩道橋を渡ってください。センターは駅前広場に隣接しています。' : 'Exit via the West Exit (西口 / Nishi-guchi) on the 2F concourse. Cross the pedestrian deck toward the Hokan-cho district. The center is adjacent to the station plaza.'}
                 </span>
               </div>
             </div>
@@ -80,10 +81,10 @@ export const VenueModal: React.FC<VenueModalProps> = ({ isOpen, onClose }) => {
               <Building2 className="w-5 h-5 text-[#0d4643] shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold text-[#083331] block text-xs sm:text-sm">
-                  Floor &amp; Check-in Desk
+                  {isJa ? '階数と受付デスク' : 'Floor & Check-in Desk'}
                 </span>
                 <span className="text-xs text-slate-600 mt-0.5 block">
-                  Take the central elevator or escalators to the 2nd Floor. The seminar reception and simultaneous interpretation headset checkout desk open at 13:30.
+                  {isJa ? '中央エレベーターまたはエスカレーターで2階へお上がりください。セミナーの受付と同時通訳用ヘッドセットの貸し出しは13:30から開始します。' : 'Take the central elevator or escalators to the 2nd Floor. The seminar reception and simultaneous interpretation headset checkout desk open at 13:30.'}
                 </span>
               </div>
             </div>
@@ -97,7 +98,7 @@ export const VenueModal: React.FC<VenueModalProps> = ({ isOpen, onClose }) => {
               rel="noopener noreferrer"
               className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl bg-[#083331] hover:bg-[#0d4643] text-white font-bold text-xs transition-colors shadow-md"
             >
-              <span>Open in Google Maps</span>
+              <span>{isJa ? 'Googleマップで開く' : 'Open in Google Maps'}</span>
               <ExternalLink className="w-4 h-4 text-[#79ded7]" />
             </a>
           </div>
@@ -110,7 +111,7 @@ export const VenueModal: React.FC<VenueModalProps> = ({ isOpen, onClose }) => {
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition-colors cursor-pointer"
           >
-            Done
+            {isJa ? '完了' : 'Done'}
           </button>
         </div>
 

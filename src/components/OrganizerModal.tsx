@@ -6,9 +6,10 @@ import { TsiLogo } from './TsiLogo';
 interface OrganizerModalProps {
   isOpen: boolean;
   onClose: () => void;
+  isJa?: boolean;
 }
 
-export const OrganizerModal: React.FC<OrganizerModalProps> = ({ isOpen, onClose }) => {
+export const OrganizerModal: React.FC<OrganizerModalProps> = ({ isOpen, onClose, isJa = false }) => {
   if (!isOpen) return null;
 
   return (
@@ -23,10 +24,10 @@ export const OrganizerModal: React.FC<OrganizerModalProps> = ({ isOpen, onClose 
             </div>
             <div>
               <h2 className="font-headline text-lg sm:text-xl font-bold uppercase tracking-wide">
-                Host &amp; Partner Organizations
+                {isJa ? '主催およびパートナー組織' : 'Host & Partner Organizations'}
               </h2>
               <p className="text-xs text-[#9ce7e2] font-medium">
-                Organizing Committee for Kizuna 2026
+                {isJa ? 'Kizuna 2026 実行委員会' : 'Organizing Committee for Kizuna 2026'}
               </p>
             </div>
           </div>
@@ -66,7 +67,7 @@ export const OrganizerModal: React.FC<OrganizerModalProps> = ({ isOpen, onClose 
 
                 {org.type === 'host' && (
                   <span className="px-2.5 py-0.5 rounded-full bg-[#f0fbfb] border border-[#b2e5e1] text-[#083331] text-[10px] font-bold uppercase">
-                    Host
+                    {isJa ? '主催' : 'Host'}
                   </span>
                 )}
               </div>
@@ -84,7 +85,7 @@ export const OrganizerModal: React.FC<OrganizerModalProps> = ({ isOpen, onClose 
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition-colors cursor-pointer"
           >
-            Close
+            {isJa ? '閉じる' : 'Close'}
           </button>
         </div>
 

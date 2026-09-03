@@ -51,7 +51,7 @@ export const SpeakersPage: React.FC<SpeakersPageProps> = ({
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-      
+
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <span className="font-script text-3xl sm:text-4xl text-[#d90429] font-bold block -mb-1">
@@ -71,11 +71,10 @@ export const SpeakersPage: React.FC<SpeakersPageProps> = ({
           <button
             key={cat.id}
             onClick={() => setFilterCategory(cat.id)}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
-              filterCategory === cat.id
-                ? 'bg-slate-900 text-white shadow-sm'
-                : 'bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50'
-            }`}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${filterCategory === cat.id
+              ? 'bg-slate-900 text-white shadow-sm'
+              : 'bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50'
+              }`}
           >
             {cat.label}
           </button>
@@ -92,7 +91,7 @@ export const SpeakersPage: React.FC<SpeakersPageProps> = ({
 
           <div className="flex flex-col lg:flex-row gap-8 items-start justify-between">
             <div className="space-y-4 flex-1">
-              
+
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#d90429] text-white text-xs font-headline font-bold uppercase tracking-wider shadow-md">
                 <Sparkles className="w-4 h-4 text-amber-300" />
@@ -186,9 +185,8 @@ export const SpeakersPage: React.FC<SpeakersPageProps> = ({
               return (
                 <div
                   key={speaker.id}
-                  className={`bg-white border rounded-3xl p-6 sm:p-7 shadow-sm flex flex-col justify-between transition-all hover:border-indigo-400 hover:shadow-md ${
-                    isTargeted ? 'border-indigo-500 ring-2 ring-indigo-400/30 bg-indigo-50/20' : 'border-slate-200'
-                  }`}
+                  className={`bg-white border rounded-3xl p-6 sm:p-7 shadow-sm flex flex-col justify-between transition-all hover:border-indigo-400 hover:shadow-md ${isTargeted ? 'border-indigo-500 ring-2 ring-indigo-400/30 bg-indigo-50/20' : 'border-slate-200'
+                    }`}
                 >
                   <div className="space-y-3">
                     {/* Header line */}

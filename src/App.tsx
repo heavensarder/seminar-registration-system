@@ -29,6 +29,7 @@ function Home() {
   const [isVenueModalOpen, setIsVenueModalOpen] = useState(false);
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
   const [isOrganizerModalOpen, setIsOrganizerModalOpen] = useState(false);
+  const [isJa, setIsJa] = useState(true);
 
   const handleSelectSpeaker = (speakerId: string) => {
     const speaker = SPEAKERS.find((s) => s.id === speakerId) || null;
@@ -52,11 +53,13 @@ function Home() {
           onOpenVenue={() => setIsVenueModalOpen(true)}
           onOpenTheme={(themeId) => setSelectedThemeId(themeId)}
           onOpenOrganizer={() => setIsOrganizerModalOpen(true)}
+          isJa={isJa}
+          onToggleLanguage={() => setIsJa(!isJa)}
         />
 
         {/* Live Countdown Clock Bar directly supporting the poster */}
         <div className="max-w-4xl mx-auto px-3 sm:px-6 mt-3 mb-8 print:hidden">
-          <CountdownTimer />
+          <CountdownTimer isJa={isJa} />
         </div>
 
       </main>
@@ -73,12 +76,14 @@ function Home() {
         speaker={selectedSpeaker}
         onClose={() => setSelectedSpeaker(null)}
         onOpenRegister={handleOpenRegister}
+        isJa={isJa}
       />
 
       {/* Venue & Access Directions Modal */}
       <VenueModal
         isOpen={isVenueModalOpen}
         onClose={() => setIsVenueModalOpen(false)}
+        isJa={isJa}
       />
 
       {/* Seminar Theme Highlights Modal */}
@@ -86,12 +91,14 @@ function Home() {
         themeId={selectedThemeId}
         onClose={() => setSelectedThemeId(null)}
         onOpenRegister={handleOpenRegister}
+        isJa={isJa}
       />
 
       {/* Host & Sponsors Modal */}
       <OrganizerModal
         isOpen={isOrganizerModalOpen}
         onClose={() => setIsOrganizerModalOpen(false)}
+        isJa={isJa}
       />
 
     </div>

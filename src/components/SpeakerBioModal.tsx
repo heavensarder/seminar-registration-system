@@ -6,12 +6,14 @@ interface SpeakerBioModalProps {
   speaker: Speaker | null;
   onClose: () => void;
   onOpenRegister: () => void;
+  isJa?: boolean;
 }
 
 export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
   speaker,
   onClose,
   onOpenRegister,
+  isJa = false,
 }) => {
   if (!speaker) return null;
 
@@ -24,11 +26,11 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
           <div>
             {speaker.isKeynote && (
               <span className="inline-block px-3 py-1 rounded-full bg-[#e62b32] text-white font-bold text-[10px] uppercase tracking-wider mb-2 shadow-xs">
-                ★ Keynote Speaker &amp; Presenter
+                ★ {isJa ? '基調講演者' : 'Keynote Speaker & Presenter'}
               </span>
             )}
             <h2 className="font-headline text-xl sm:text-2xl font-bold tracking-wide uppercase">
-              {speaker.name}
+              {isJa && speaker.nameJa ? speaker.nameJa : speaker.name}
             </h2>
             <p className="text-xs sm:text-sm text-[#9ce7e2] font-medium mt-0.5">
               {speaker.role}{speaker.organization ? ` • ${speaker.organization}` : ''}
@@ -51,7 +53,7 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
             <div className="bg-[#f0fbfb] border border-[#b2e5e1] rounded-2xl p-4 space-y-1.5">
               <div className="text-[11px] font-bold text-[#083331] uppercase tracking-wider flex items-center gap-1.5">
                 <BookOpen className="w-3.5 h-3.5 text-[#e62b32]" />
-                <span>Presentation &amp; Discussion Topic</span>
+                <span>{isJa ? '講演・ディスカッショントピック' : 'Presentation & Discussion Topic'}</span>
               </div>
               <p className="font-bold text-[#083331] text-sm leading-snug">
                 "{speaker.topic}"
@@ -63,7 +65,7 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
           {/* Biography */}
           <div className="space-y-2">
             <h3 className="font-bold text-[#083331] text-xs uppercase tracking-wider">
-              Biography &amp; Leadership Background
+              {isJa ? '略歴と背景' : 'Biography & Leadership Background'}
             </h3>
             <p className="leading-relaxed text-slate-600 text-sm">
               {speaker.bio}
@@ -73,20 +75,20 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
           {/* Key focus areas */}
           <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2">
             <div className="text-xs font-bold text-[#083331] uppercase tracking-wider">
-              Seminar Focus Areas
+              {isJa ? 'セミナーの主なテーマ' : 'Seminar Focus Areas'}
             </div>
             <div className="space-y-1.5 text-xs text-slate-700">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#e62b32] shrink-0" />
-                <span>Bilateral Okayama-Bangladesh strategic collaboration</span>
+                <span>{isJa ? '岡山とバングラデシュの二国間戦略的連携' : 'Bilateral Okayama-Bangladesh strategic collaboration'}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#e62b32] shrink-0" />
-                <span>Live interactive Q&amp;A session participation</span>
+                <span>{isJa ? 'ライブのインタラクティブなQ&Aセッションへの参加' : 'Live interactive Q&A session participation'}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#e62b32] shrink-0" />
-                <span>Post-seminar B2B networking and delegate interaction</span>
+                <span>{isJa ? 'セミナー後のB2Bネットワーキングと参加者との交流' : 'Post-seminar B2B networking and delegate interaction'}</span>
               </div>
             </div>
           </div>
@@ -98,7 +100,7 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
             onClick={onClose}
             className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer"
           >
-            Close
+            {isJa ? '閉じる' : 'Close'}
           </button>
 
           <button
@@ -108,7 +110,7 @@ export const SpeakerBioModal: React.FC<SpeakerBioModalProps> = ({
             }}
             className="px-5 py-2.5 rounded-xl bg-[#e62b32] hover:bg-[#cc181f] text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
           >
-            Reserve Free Pass &rarr;
+            {isJa ? '無料パスを予約する →' : 'Reserve Free Pass →'}
           </button>
         </div>
 

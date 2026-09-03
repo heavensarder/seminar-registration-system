@@ -6,12 +6,14 @@ interface ThemeDetailModalProps {
   themeId: string | null;
   onClose: () => void;
   onOpenRegister: () => void;
+  isJa?: boolean;
 }
 
 export const ThemeDetailModal: React.FC<ThemeDetailModalProps> = ({
   themeId,
   onClose,
   onOpenRegister,
+  isJa = false,
 }) => {
   if (!themeId) return null;
   const theme = SEMINAR_THEMES.find((t) => t.id === themeId);
@@ -35,7 +37,7 @@ export const ThemeDetailModal: React.FC<ThemeDetailModalProps> = ({
             </div>
             <div>
               <span className="text-[10px] uppercase font-extrabold text-[#79ded7] tracking-wider block">
-                Seminar Pillar
+                {isJa ? 'セミナーの柱' : 'Seminar Pillar'}
               </span>
               <h2 className="font-headline text-xl sm:text-2xl font-extrabold uppercase tracking-wide">
                 {theme.title}
@@ -66,7 +68,7 @@ export const ThemeDetailModal: React.FC<ThemeDetailModalProps> = ({
           {/* Highlights */}
           <div className="space-y-3 bg-[#f0fbfb] border border-[#b2e5e1] rounded-2xl p-4 sm:p-5">
             <div className="text-xs font-bold text-[#083331] uppercase tracking-wider">
-              Key Discussion Points &amp; Opportunities
+              {isJa ? '主な論点と機会' : 'Key Discussion Points & Opportunities'}
             </div>
             <div className="space-y-2">
               {theme.highlights.map((highlight, idx) => (
@@ -85,7 +87,7 @@ export const ThemeDetailModal: React.FC<ThemeDetailModalProps> = ({
             onClick={onClose}
             className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer"
           >
-            Close
+            {isJa ? '閉じる' : 'Close'}
           </button>
 
           <button
@@ -95,7 +97,7 @@ export const ThemeDetailModal: React.FC<ThemeDetailModalProps> = ({
             }}
             className="px-5 py-2.5 rounded-xl bg-[#e62b32] hover:bg-[#cc181f] text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
           >
-            Register for this Session &rarr;
+            {isJa ? 'このセッションに登録する →' : 'Register for this Session →'}
           </button>
         </div>
 

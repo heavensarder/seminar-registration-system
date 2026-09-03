@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Clock } from 'lucide-react';
 
-export const CountdownTimer: React.FC = () => {
+interface CountdownTimerProps {
+  isJa?: boolean;
+}
+
+export const CountdownTimer: React.FC<CountdownTimerProps> = ({ isJa = false }) => {
   const [timeLeft, setTimeLeft] = useState<{
     days: number;
     hours: number;
@@ -46,10 +50,10 @@ export const CountdownTimer: React.FC = () => {
           </div>
           <div>
             <div className="text-xs uppercase font-extrabold tracking-widest text-[#79ded7]">
-              Seminar Countdown
+              {isJa ? 'セミナー カウントダウン' : 'Seminar Countdown'}
             </div>
             <div className="font-headline text-xs sm:text-lg lg:text-xl font-extrabold uppercase tracking-wide text-white whitespace-nowrap">
-              Saturday, September 19, 2026 • 14:00 JST
+              {isJa ? '2026年9月19日 (土) • 14:00 JST' : 'Saturday, September 19, 2026 • 14:00 JST'}
             </div>
           </div>
         </div>
@@ -57,10 +61,10 @@ export const CountdownTimer: React.FC = () => {
         {/* Counter Blocks */}
         <div className="flex items-center gap-2 sm:gap-3">
           {[
-            { label: 'DAYS', value: timeLeft.days },
-            { label: 'HOURS', value: timeLeft.hours },
-            { label: 'MINUTES', value: timeLeft.minutes },
-            { label: 'SECONDS', value: timeLeft.seconds },
+            { label: isJa ? '日' : 'DAYS', value: timeLeft.days },
+            { label: isJa ? '時間' : 'HOURS', value: timeLeft.hours },
+            { label: isJa ? '分' : 'MINUTES', value: timeLeft.minutes },
+            { label: isJa ? '秒' : 'SECONDS', value: timeLeft.seconds },
           ].map((item, idx) => (
             <div
               key={idx}

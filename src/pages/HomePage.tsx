@@ -44,7 +44,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* COUNTDOWN & CALENDAR SYNC SECTION */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
-        <CountdownTimer />
+        <CountdownTimer isJa={language === 'ja'} />
       </div>
 
       {/* WHY ATTEND / SEMINAR IMPACT PILLARS */}
