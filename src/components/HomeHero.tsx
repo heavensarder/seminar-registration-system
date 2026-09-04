@@ -217,33 +217,21 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                     <span className="font-headline font-bold text-white text-xs sm:text-sm md:text-base tracking-wide flex items-center gap-2">
                       {speaker.name},
                       {speaker.badge && (
-                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] sm:text-xs font-bold bg-amber-500 text-[#041e1d] tracking-wider uppercase">
+                        <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] sm:text-xs font-bold tracking-wider uppercase ${
+                          speaker.badge === 'Special Guest' 
+                            ? 'bg-purple-500 text-white shadow-[0_0_10px_rgba(168,85,247,0.5)]' 
+                            : speaker.badge === 'Speaker'
+                            ? 'bg-blue-500 text-white shadow-[0_0_10px_rgba(59,130,246,0.5)]'
+                            : 'bg-amber-500 text-[#041e1d]'
+                        }`}>
                           {speaker.badge}
                         </span>
                       )}
                     </span>
                     <span className="text-xs sm:text-sm text-[#d4f2f0] font-normal truncate">
-                      {isJa
-                        ? (speaker.role === 'Member of the House of Representatives' ? '衆議院議員' :
-                          speaker.role === 'Ambassador of Bangladesh to Japan' ? '駐日バングラデシュ大使' :
-                            speaker.role === 'Counsellor (Labour & Welfare)' ? '参事官（労働・福祉）' :
-                              speaker.role === 'Chairman' ? '会長' :
-                                speaker.role === 'Executive Director, TSI Limited, Bangladesh &' ? 'TSIリミテッド バングラデシュ 専務取締役 兼' :
-                                  speaker.role === 'CEO' ? 'CEO' :
-                                    speaker.role === 'Chairperson' ? '理事長' :
-                                      speaker.role === 'WOMC Executive Director, West-Okayama Medical Clinic & Chairman, Hudsonland' ? '西岡山医療クリニック専務理事 兼 ハドソンランド会長' :
-                                        speaker.role === 'Managing Director' ? '代表取締役' : speaker.role)
-                        : speaker.role}
+                      {isJa && speaker.roleJa ? speaker.roleJa : speaker.role}
                       {speaker.organization
-                        ? `, ${isJa
-                          ? (speaker.organization === 'Okayama 1st District' ? '岡山1区' :
-                            speaker.organization === 'Embassy of Bangladesh in Tokyo' ? '在東京バングラデシュ大使館' :
-                              speaker.organization === 'TSI Group, Bangladesh' ? 'TSIグループ・バングラデシュ' :
-                                speaker.organization === 'Former Deputy Head, PR & Cultural Section, Embassy of Japan in Bangladesh' ? '元 在バングラデシュ日本国大使館 広報文化部長' :
-                                  speaker.organization === 'ZenmiraiJapan Co., Ltd.' ? '株式会社ZenmiraiJapan' :
-                                    speaker.organization === 'Okayama Institute of Languages' ? '岡山外語学院' :
-                                      speaker.organization === 'TSI Limited' ? 'TSIリミテッド' : speaker.organization)
-                          : speaker.organization}`
+                        ? `, ${isJa && speaker.organizationJa ? speaker.organizationJa : speaker.organization}`
                         : ''}
                     </span>
                   </div>
