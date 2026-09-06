@@ -82,7 +82,7 @@ export const SPEAKERS: Speaker[] = [
   {
     id: 'ken-mori',
     name: 'Mr. Ken Mori',
-    nameJa: '森 健 氏',
+    nameJa: '森 健太郎',
     role: 'Chairman',
     roleJa: '会長',
     badge: 'Special Guest',
