@@ -130,6 +130,14 @@ export const exportToPDF = async (registrations: any[]) => {
       lineColor: [0, 0, 0], // Black borders
       lineWidth: 0.1,
     },
+    columnStyles: {
+      0: { cellWidth: 25 },  // Pass ID
+      1: { cellWidth: 45 },  // Full Name
+      2: { cellWidth: 50 },  // Email
+      3: { cellWidth: 35 },  // Phone
+      4: { cellWidth: 65 },  // Organization
+      5: { cellWidth: 'auto' } // Role
+    },
     alternateRowStyles: {
       fillColor: [240, 240, 240] // Very light gray for alternate rows for readability in B&W printing
     }
