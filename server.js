@@ -242,9 +242,9 @@ app.patch('/api/registrations/:id/status', async (req, res) => {
     
     let emailSent = false;
     if (status === 'Confirmed' && user && user.status !== 'Confirmed') {
-      const [countResult] = await pool.query("SELECT COUNT(*) as count FROM registrations WHERE status = 'Confirmed' AND passId IS NOT NULL");
-      const confirmedCount = countResult[0].count;
-      const serialPassId = `Kizuna ${3001 + confirmedCount}`;
+      const [maxResult] = await pool.query("SELECT MAX(CAST(SUBSTRING_INDEX(passId, ' ', -1) AS UNSIGNED)) as maxId FROM registrations WHERE passId IS NOT NULL AND passId LIKE 'Kizuna %'");
+      const currentMax = maxResult[0].maxId || 3000;
+      const serialPassId = `Kizuna ${currentMax + 1}`;
       await pool.query('UPDATE registrations SET passId = ? WHERE id = ?', [serialPassId, id]);
       emailSent = await sendConfirmationEmail(user.email, user.fullName, serialPassId);
     }
