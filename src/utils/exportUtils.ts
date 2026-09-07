@@ -35,7 +35,7 @@ export const exportToCSV = (registrations: any[]) => {
   }
 
   const csvString = csvRows.join('\n');
-  const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+  const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   
   const link = document.createElement('a');
@@ -58,20 +58,41 @@ export const exportToExcel = (registrations: any[]) => {
   XLSX.writeFile(workbook, `Kizuna2026_Confirmed_List_${new Date().toISOString().split('T')[0]}.xlsx`);
 };
 
-export const exportToPDF = (registrations: any[]) => {
+export const exportToPDF = async (registrations: any[]) => {
   const data = mapRegistrationsToData(registrations);
   if (data.length === 0) return;
 
   const doc = new jsPDF('landscape');
   
+  // Load Japanese font
+  try {
+    const fontUrl = '/fonts/NotoSansJP.ttf';
+    const fontResponse = await fetch(fontUrl);
+    const fontBuffer = await fontResponse.arrayBuffer();
+    
+    // Convert ArrayBuffer to Base64
+    let binary = '';
+    const bytes = new Uint8Array(fontBuffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    const base64Font = btoa(binary);
+    
+    doc.addFileToVFS('NotoSansJP.ttf', base64Font);
+    doc.addFont('NotoSansJP.ttf', 'NotoSansJP', 'normal');
+    doc.setFont('NotoSansJP', 'normal');
+  } catch (error) {
+    console.error('Failed to load Japanese font, fallback to default:', error);
+    doc.setFont('helvetica', 'normal');
+  }
+  
   // Title
   doc.setFontSize(18);
-  doc.setFont('helvetica', 'bold');
   doc.text('Kizuna 2026 Okayama-Bangladesh Partnership Seminar', 14, 22);
   
   // Subtitle
   doc.setFontSize(12);
-  doc.setFont('helvetica', 'normal');
   doc.text(`Confirmed Attendees List - Generated on ${new Date().toLocaleDateString()}`, 14, 30);
 
   // Table
@@ -96,6 +117,7 @@ export const exportToPDF = (registrations: any[]) => {
       fontStyle: 'bold'
     },
     styles: {
+      font: 'NotoSansJP',
       fontSize: 10,
       cellPadding: 4,
       textColor: [0, 0, 0], // Black text
