@@ -66,8 +66,14 @@ export const exportToPDF = async (registrations: any[]) => {
   
   // Load Japanese font
   try {
-    const fontUrl = '/fonts/NotoSansJP.ttf';
+    const fontUrl = '/fonts/MPLUS1p-Regular.ttf';
     const fontResponse = await fetch(fontUrl);
+    
+    // Check if the server returned HTML (error page) instead of the font
+    if (fontResponse.headers.get('content-type')?.includes('text/html')) {
+      throw new Error('Fetched HTML instead of font file');
+    }
+    
     const fontBuffer = await fontResponse.arrayBuffer();
     
     // Convert ArrayBuffer to Base64
@@ -79,9 +85,9 @@ export const exportToPDF = async (registrations: any[]) => {
     }
     const base64Font = btoa(binary);
     
-    doc.addFileToVFS('NotoSansJP.ttf', base64Font);
-    doc.addFont('NotoSansJP.ttf', 'NotoSansJP', 'normal');
-    doc.setFont('NotoSansJP', 'normal');
+    doc.addFileToVFS('MPLUS1p-Regular.ttf', base64Font);
+    doc.addFont('MPLUS1p-Regular.ttf', 'MPLUS1p', 'normal');
+    doc.setFont('MPLUS1p', 'normal');
   } catch (error) {
     console.error('Failed to load Japanese font, fallback to default:', error);
     doc.setFont('helvetica', 'normal');
@@ -117,7 +123,7 @@ export const exportToPDF = async (registrations: any[]) => {
       fontStyle: 'bold'
     },
     styles: {
-      font: 'NotoSansJP',
+      font: 'MPLUS1p',
       fontSize: 10,
       cellPadding: 4,
       textColor: [0, 0, 0], // Black text
