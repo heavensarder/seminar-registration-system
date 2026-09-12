@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '../components/AdminLayout';
-import { MessageSquare, Calendar, X, Eye } from 'lucide-react';
+import { MessageSquare, Calendar, X, Eye, Trash2 } from 'lucide-react';
 
 interface AdminOpinionsListPageProps {
   onLogout: () => void;
@@ -21,6 +21,24 @@ export const AdminOpinionsListPage: React.FC<AdminOpinionsListPageProps> = ({ on
     } catch (error) {
       console.error('Failed to fetch opinions:', error);
       setLoading(false);
+    }
+  };
+
+  const handleDeleteOpinion = async (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    if (!window.confirm('Are you sure you want to delete this opinion?')) return;
+    
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${apiUrl}/opinions/${id}`, { method: 'DELETE' });
+      if (response.ok) {
+        setOpinions(prev => prev.filter(op => op.id !== id));
+      } else {
+        alert('Failed to delete opinion.');
+      }
+    } catch (error) {
+      console.error('Failed to delete opinion', error);
+      alert('Network error occurred.');
     }
   };
 
@@ -136,10 +154,19 @@ export const AdminOpinionsListPage: React.FC<AdminOpinionsListPageProps> = ({ on
                       <td className="px-6 py-4 text-teal-50 truncate max-w-[200px]">{op.company || '-'}</td>
                       <td className="px-6 py-4 text-teal-50">{op.satisfaction || '-'}</td>
                       <td className="px-6 py-4 text-right">
-                        <button className="bg-[#16605b]/30 hover:bg-[#16605b] text-white p-2 rounded-lg transition-colors inline-flex items-center gap-2 group-hover:bg-[#16605b]">
-                          <Eye className="w-4 h-4" />
-                          <span className="text-xs font-bold uppercase tracking-wider">View</span>
-                        </button>
+                        <div className="flex items-center justify-end gap-2">
+                          <button className="bg-[#16605b]/30 hover:bg-[#16605b] text-white p-2 rounded-lg transition-colors inline-flex items-center gap-2 group-hover:bg-[#16605b]">
+                            <Eye className="w-4 h-4" />
+                            <span className="text-xs font-bold uppercase tracking-wider">View</span>
+                          </button>
+                          <button 
+                            onClick={(e) => handleDeleteOpinion(e, op.id)}
+                            className="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 p-2 rounded-lg transition-colors group-hover:bg-rose-500/20"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))

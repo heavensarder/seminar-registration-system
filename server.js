@@ -478,6 +478,17 @@ app.patch('/api/opinions/:id/read', async (req, res) => {
   }
 });
 
+app.delete('/api/opinions/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query('DELETE FROM opinions WHERE id = ?', [id]);
+    res.json({ message: 'Opinion deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting opinion:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 app.post('/api/admin/send-opinion-emails', async (req, res) => {
   try {
