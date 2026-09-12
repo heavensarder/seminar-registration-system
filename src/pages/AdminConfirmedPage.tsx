@@ -19,8 +19,16 @@ export const AdminConfirmedPage: React.FC<AdminConfirmedPageProps> = ({ onLogout
       const response = await fetch(`${apiUrl}/registrations`);
       const data = await response.json();
       
-      // Filter only confirmed and sort by ID ascending (serial)
-      const confirmedData = data.filter((reg: any) => reg.status === 'Confirmed').sort((a: any, b: any) => a.id - b.id);
+      // Filter only confirmed and sort by passId (serial) ascending
+      const getPassIdNum = (reg: any) => {
+        if (reg.passId) {
+          const match = reg.passId.match(/\d+/);
+          return match ? parseInt(match[0], 10) : (3000 + reg.id);
+        }
+        return 3000 + reg.id;
+      };
+      
+      const confirmedData = data.filter((reg: any) => reg.status === 'Confirmed').sort((a: any, b: any) => getPassIdNum(a) - getPassIdNum(b));
       
       setRegistrations(confirmedData);
       setLoading(false);
