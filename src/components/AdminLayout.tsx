@@ -40,23 +40,23 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
         console.error('Failed to fetch unread opinions count', e);
       }
     };
-    
+
     fetchUnreadCount();
     const interval = setInterval(fetchUnreadCount, 30000); // Check every 30s
     return () => clearInterval(interval);
   }, []);
 
   const opinionNavItems = [
-    { name: 'Opinion Email Blast', path: '/admin/opinion-emails', icon: Mail },
+    { name: 'Opinion Management', path: '/admin/opinion-emails', icon: Mail },
     { name: 'All Opinions', path: '/admin/opinions-list', icon: MessageSquare, count: unreadCount },
   ];
 
   return (
     <div className="flex h-screen bg-[#041e1d] text-white font-sans selection:bg-[#e62b32] selection:text-white">
-      
+
       {/* Sidebar Navigation */}
       <aside className="w-64 bg-[#052322] border-r border-[#16605b]/30 flex flex-col hidden md:flex shrink-0">
-        
+
         {/* Brand */}
         <div className="h-20 flex items-center px-6 border-b border-[#16605b]/30">
           <div className="bg-white p-1.5 rounded-lg mr-3">
@@ -81,11 +81,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
                     navigate(item.path);
                   }
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium text-sm cursor-pointer ${
-                  isActive 
-                    ? 'bg-[#083331] text-white border border-[#16605b] shadow-inner' 
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium text-sm cursor-pointer ${isActive
+                    ? 'bg-[#083331] text-white border border-[#16605b] shadow-inner'
                     : 'text-teal-100/60 hover:text-white hover:bg-white/5 border border-transparent'
-                }`}
+                  }`}
               >
                 <Icon className={`w-5 h-5 ${isActive ? 'text-[#79ded7]' : 'text-teal-100/40'}`} />
                 {item.name}
@@ -109,11 +108,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
                       navigate(item.path);
                     }
                   }}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all font-medium text-sm cursor-pointer ${
-                    isActive 
-                      ? 'bg-[#083331] text-white border border-[#16605b] shadow-inner' 
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all font-medium text-sm cursor-pointer ${isActive
+                      ? 'bg-[#083331] text-white border border-[#16605b] shadow-inner'
                       : 'text-teal-100/60 hover:text-white hover:bg-white/5 border border-transparent'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <Icon className={`w-5 h-5 ${isActive ? 'text-[#79ded7]' : 'text-teal-100/40'}`} />
@@ -132,7 +130,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
 
         {/* User / Logout */}
         <div className="p-4 border-t border-[#16605b]/30">
-          <button 
+          <button
             onClick={handleLogout}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-teal-100/60 hover:text-rose-400 hover:bg-rose-500/10 transition-all text-sm font-medium cursor-pointer"
           >
