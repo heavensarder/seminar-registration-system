@@ -43,7 +43,7 @@ export const AdminOpinionEmailsPage: React.FC<AdminOpinionEmailsPageProps> = ({ 
         body: JSON.stringify({ participantIds: ids }),
       });
       const data = await response.json();
-      
+
       if (response.ok) {
         setSuccessMsg(data.message || 'Emails sent successfully.');
         setTimeout(() => setSuccessMsg(''), 5000);
@@ -66,7 +66,7 @@ export const AdminOpinionEmailsPage: React.FC<AdminOpinionEmailsPageProps> = ({ 
           <div>
             <h3 className="font-headline font-bold text-white tracking-widest uppercase text-xl mb-2 flex items-center gap-3">
               <Mail className="w-6 h-6 text-[#79ded7]" />
-              Opinion Email Blast
+              Opinion Management
             </h3>
             <p className="text-teal-100/70 text-sm max-w-xl">
               Send the Opinion Form link to confirmed participants. Ensure you have configured the template in Mail Configuration first.
@@ -110,7 +110,7 @@ export const AdminOpinionEmailsPage: React.FC<AdminOpinionEmailsPageProps> = ({ 
           <div className="p-6 border-b border-[#16605b]/30 flex justify-between items-center">
             <h3 className="font-headline font-bold text-white tracking-widest uppercase">Confirmed Participants ({registrations.length})</h3>
           </div>
-          
+
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm text-teal-100">
               <thead className="bg-[#083331] text-xs uppercase font-headline tracking-wider text-teal-100/60">
