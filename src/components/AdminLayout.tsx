@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, Settings, LogOut, Ticket, CheckCircle2, Mail } from 'lucide-react';
+import { LayoutDashboard, Users, Settings, LogOut, Ticket, CheckCircle2, Mail, MessageSquare } from 'lucide-react';
 import { TsiLogo } from './TsiLogo';
 
 interface AdminLayoutProps {
@@ -17,12 +17,38 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
     navigate('/admin/login');
   };
 
-  const navItems = [
+  const mainNavItems = [
     { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Registrations', path: '/admin/registrations', icon: Users },
     { name: 'Confirmed List', path: '/admin/confirmed', icon: CheckCircle2 },
     { name: 'Mail Configuration', path: '/admin/mail-config', icon: Mail },
     { name: 'Event Settings', path: '/admin/event-settings', icon: Settings },
+  ];
+
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        const response = await fetch(`${apiUrl}/opinions/unread-count`);
+        if (response.ok) {
+          const data = await response.json();
+          setUnreadCount(data.count);
+        }
+      } catch (e) {
+        console.error('Failed to fetch unread opinions count', e);
+      }
+    };
+    
+    fetchUnreadCount();
+    const interval = setInterval(fetchUnreadCount, 30000); // Check every 30s
+    return () => clearInterval(interval);
+  }, []);
+
+  const opinionNavItems = [
+    { name: 'Opinion Email Blast', path: '/admin/opinion-emails', icon: Mail },
+    { name: 'All Opinions', path: '/admin/opinions-list', icon: MessageSquare, count: unreadCount },
   ];
 
   return (
@@ -43,8 +69,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 py-6 px-4 space-y-2">
-          {navItems.map((item) => {
+        <nav className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
+          {mainNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             return (
@@ -67,6 +93,42 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
             );
           })}
         </nav>
+
+        {/* Opinion Panel */}
+        <div className="px-4 pb-4">
+          <div className="text-[10px] font-headline font-bold text-teal-100/40 uppercase tracking-widest mb-2 px-4">Opinion Panel</div>
+          <div className="space-y-2">
+            {opinionNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              return (
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    if (item.path !== '#') {
+                      navigate(item.path);
+                    }
+                  }}
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all font-medium text-sm cursor-pointer ${
+                    isActive 
+                      ? 'bg-[#083331] text-white border border-[#16605b] shadow-inner' 
+                      : 'text-teal-100/60 hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon className={`w-5 h-5 ${isActive ? 'text-[#79ded7]' : 'text-teal-100/40'}`} />
+                    {item.name}
+                  </div>
+                  {item.count !== undefined && item.count > 0 && (
+                    <span className="bg-[#e62b32] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      {item.count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
         {/* User / Logout */}
         <div className="p-4 border-t border-[#16605b]/30">

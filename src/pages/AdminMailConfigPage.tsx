@@ -13,17 +13,19 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [template, setTemplate] = useState('');
+  const [opinionTemplate, setOpinionTemplate] = useState('');
+  const [activeTab, setActiveTab] = useState<'confirmation' | 'opinion'>('confirmation');
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [previewHtml, setPreviewHtml] = useState('');
 
-  const fetchPreview = async (htmlTemplate: string) => {
+  const fetchPreview = async (htmlTemplate: string, type: 'confirmation' | 'opinion' = 'confirmation') => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       const res = await fetch(`${apiUrl}/settings/mail/preview`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ template: htmlTemplate })
+        body: JSON.stringify({ template: htmlTemplate, type })
       });
       if (res.ok) {
         const html = await res.text();
@@ -48,8 +50,11 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
           if (data.password) setPassword(data.password);
           if (data.template) {
             setTemplate(data.template);
-            fetchPreview(data.template);
           }
+          if (data.opinionTemplate) {
+            setOpinionTemplate(data.opinionTemplate);
+          }
+          fetchPreview(data.template || '', 'confirmation');
         }
       } catch (error) {
         console.error('Failed to load settings', error);
@@ -61,9 +66,18 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
   // Update preview whenever template changes
   const handleTemplateChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
-    setTemplate(val);
-    fetchPreview(val);
+    if (activeTab === 'confirmation') {
+      setTemplate(val);
+      fetchPreview(val, 'confirmation');
+    } else {
+      setOpinionTemplate(val);
+      fetchPreview(val, 'opinion');
+    }
   };
+
+  useEffect(() => {
+    fetchPreview(activeTab === 'confirmation' ? template : opinionTemplate, activeTab);
+  }, [activeTab]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +89,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
       const res = await fetch(`${apiUrl}/settings/mail`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ host, port, email, password, template }),
+        body: JSON.stringify({ host, port, email, password, template, opinionTemplate }),
       });
 
       if (res.ok) {
@@ -179,18 +193,35 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
               </div>
 
               <div className="flex-1 min-h-[300px] flex flex-col">
-                <label className="block text-xs font-bold text-teal-100 uppercase tracking-widest mb-2 flex items-center gap-2">
-                  <Code className="w-4 h-4" />
-                  HTML Email Template
-                </label>
+                <div className="flex items-center gap-4 border-b border-[#16605b]/30 mb-4">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('confirmation')}
+                    className={`pb-2 text-xs font-bold uppercase tracking-widest flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${activeTab === 'confirmation' ? 'border-[#79ded7] text-[#79ded7]' : 'border-transparent text-teal-100/50 hover:text-teal-100/80'}`}
+                  >
+                    <Code className="w-4 h-4" />
+                    Confirmation Email
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('opinion')}
+                    className={`pb-2 text-xs font-bold uppercase tracking-widest flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${activeTab === 'opinion' ? 'border-[#79ded7] text-[#79ded7]' : 'border-transparent text-teal-100/50 hover:text-teal-100/80'}`}
+                  >
+                    <Code className="w-4 h-4" />
+                    Opinion Email
+                  </button>
+                </div>
                 <textarea
-                  value={template}
+                  value={activeTab === 'confirmation' ? template : opinionTemplate}
                   onChange={handleTemplateChange}
                   className="w-full flex-1 bg-[#041e1d] border border-[#16605b] text-teal-100 p-4 rounded-xl outline-none focus:border-[#79ded7] focus:ring-1 focus:ring-[#79ded7] transition-all font-mono text-xs resize-none"
                   placeholder="Paste your HTML template here..."
                 />
                 <p className="text-[10px] text-teal-100/50 mt-2">
-                  Available placeholders: <code className="text-[#79ded7] bg-[#041e1d] px-1 rounded">{`{{fullName}}`}</code> and <code className="text-[#79ded7] bg-[#041e1d] px-1 rounded">{`{{passId}}`}</code>.
+                  {activeTab === 'confirmation' 
+                    ? <>Available placeholders: <code className="text-[#79ded7] bg-[#041e1d] px-1 rounded">{"{{fullName}}"}</code> and <code className="text-[#79ded7] bg-[#041e1d] px-1 rounded">{"{{passId}}"}</code>.</>
+                    : <>Available placeholders: <code className="text-[#79ded7] bg-[#041e1d] px-1 rounded">{"{{fullName}}"}</code> and <code className="text-[#79ded7] bg-[#041e1d] px-1 rounded">{"{{opinionLink}}"}</code>.</>
+                  }
                 </p>
               </div>
 

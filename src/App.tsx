@@ -22,6 +22,9 @@ import { AdminRegistrationsPage } from './pages/AdminRegistrationsPage';
 import { AdminConfirmedPage } from './pages/AdminConfirmedPage';
 import { AdminMailConfigPage } from './pages/AdminMailConfigPage';
 import { AdminEventSettingsPage } from './pages/AdminEventSettingsPage';
+import { OpinionPage } from './pages/OpinionPage';
+import { AdminOpinionEmailsPage } from './pages/AdminOpinionEmailsPage';
+import { AdminOpinionsListPage } from './pages/AdminOpinionsListPage';
 
 function Home() {
   const navigate = useNavigate();
@@ -133,6 +136,7 @@ export default function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/opinion" element={<OpinionPage />} />
         <Route 
           path="/register" 
           element={
@@ -191,6 +195,26 @@ export default function App() {
           element={
             isAdminLoggedIn ? (
               <AdminEventSettingsPage onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          } 
+        />
+        <Route 
+          path="/admin/opinion-emails" 
+          element={
+            isAdminLoggedIn ? (
+              <AdminOpinionEmailsPage onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          } 
+        />
+        <Route 
+          path="/admin/opinions-list" 
+          element={
+            isAdminLoggedIn ? (
+              <AdminOpinionsListPage onLogout={handleLogout} />
             ) : (
               <Navigate to="/admin/login" replace />
             )

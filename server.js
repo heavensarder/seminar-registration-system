@@ -66,12 +66,40 @@ async function initDb() {
         updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);
+
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS opinions (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        company VARCHAR(255),
+        position VARCHAR(255),
+        contactInfo VARCHAR(255),
+        satisfaction VARCHAR(100),
+        areasOfInterest JSON,
+        otherInterest VARCHAR(255),
+        futureCooperation VARCHAR(100),
+        futureCooperationDetails TEXT,
+        followUpMeeting VARCHAR(100),
+        preferredTopic VARCHAR(255),
+        mostValuablePart TEXT,
+        commentsSuggestions TEXT,
+        consent BOOLEAN DEFAULT FALSE,
+        isRead BOOLEAN DEFAULT FALSE,
+        submittedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
     
     try {
       await connection.query('ALTER TABLE registrations ADD COLUMN passId VARCHAR(50) DEFAULT NULL');
-    } catch(e) {
-      // Column might already exist
-    }
+    } catch(e) {}
+    
+    try {
+      await connection.query('ALTER TABLE registrations ADD COLUMN opinionEmailSent BOOLEAN DEFAULT FALSE');
+    } catch(e) {}
+
+    try {
+      await connection.query('ALTER TABLE opinions ADD COLUMN isRead BOOLEAN DEFAULT FALSE');
+    } catch(e) {}
 
     console.log('Database initialized successfully.');
     connection.release();
@@ -118,11 +146,33 @@ const defaultTemplate = `
 </div>
 `;
 
+// Default Opinion Template
+const defaultOpinionTemplate = `
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #16605b; border-radius: 12px; overflow: hidden; background-color: #041e1d; color: #ffffff;">
+  <div style="background-color: #083331; padding: 30px; text-align: center; border-bottom: 2px solid #e62b32;">
+    <h1 style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 2px;">KIZUNA 2026</h1>
+  </div>
+  <div style="padding: 40px 30px; background-color: #052322;">
+    <h2 style="color: #ffffff; margin-top: 0;">Hello {{fullName}},</h2>
+    <p style="color: #a0d4cf; line-height: 1.6;">We value your feedback. Please click the link below to share your opinion.</p>
+    <div style="text-align: center; margin: 40px 0;">
+      <a href="{{opinionLink}}" style="background-color: #e62b32; color: #ffffff; display: inline-block; padding: 15px 40px; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none;">Share Your Opinion</a>
+    </div>
+  </div>
+</div>
+`;
+
 // Helper: Compile Template
-const compileTemplate = (templateStr, fullName, passId) => {
-  return (templateStr || defaultTemplate)
-    .replace(/{{fullName}}/g, fullName || '')
-    .replace(/{{passId}}/g, passId || '');
+const compileTemplate = (templateStr, fullName, passId, type = 'confirmation', opinionLink = '#') => {
+  let compiled = (templateStr || (type === 'confirmation' ? defaultTemplate : defaultOpinionTemplate))
+    .replace(/{{fullName}}/g, fullName || '');
+    
+  if (type === 'confirmation') {
+    compiled = compiled.replace(/{{passId}}/g, passId || '');
+  } else {
+    compiled = compiled.replace(/{{opinionLink}}/g, opinionLink || '#');
+  }
+  return compiled;
 };
 
 // Send Email Helper
@@ -278,10 +328,11 @@ app.get('/api/settings/mail', async (req, res) => {
         port: config.port || '465',
         email: config.email || '', 
         password: config.password || '',
-        template: config.template || defaultTemplate
+        template: config.template || defaultTemplate,
+        opinionTemplate: config.opinionTemplate || defaultOpinionTemplate
       });
     }
-    res.json({ host: 'smtp.hostinger.com', port: '465', email: '', password: '', template: defaultTemplate });
+    res.json({ host: 'smtp.hostinger.com', port: '465', email: '', password: '', template: defaultTemplate, opinionTemplate: defaultOpinionTemplate });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -289,9 +340,16 @@ app.get('/api/settings/mail', async (req, res) => {
 
 app.post('/api/settings/mail', async (req, res) => {
   try {
-    const { host, port, email, password, template } = req.body;
+    const { host, port, email, password, template, opinionTemplate } = req.body;
     
-    const settingValue = JSON.stringify({ host, port, email, password, template: template || defaultTemplate });
+    const settingValue = JSON.stringify({ 
+      host, 
+      port, 
+      email, 
+      password, 
+      template: template || defaultTemplate,
+      opinionTemplate: opinionTemplate || defaultOpinionTemplate
+    });
     
     await pool.query(`
       INSERT INTO settings (settingKey, settingValue) 
@@ -342,9 +400,152 @@ app.post('/api/settings/event', async (req, res) => {
 
 // Generate Preview Template for Frontend
 app.post('/api/settings/mail/preview', (req, res) => {
-  const { template } = req.body;
-  const html = compileTemplate(template, '[Participant Name]', 'Kizuna 3001');
+  const { template, type } = req.body;
+  const opinionLink = 'http://localhost:3000/opinion';
+  const html = compileTemplate(template, '[Participant Name]', 'Kizuna 3001', type || 'confirmation', opinionLink);
   res.send(html);
+});
+
+// Opinions API
+app.post('/api/opinions', async (req, res) => {
+  try {
+    const {
+      name,
+      company,
+      position,
+      contactInfo,
+      satisfaction,
+      areasOfInterest,
+      otherInterest,
+      futureCooperation,
+      futureCooperationDetails,
+      followUpMeeting,
+      preferredTopic,
+      mostValuablePart,
+      commentsSuggestions,
+      consent
+    } = req.body;
+    
+    await pool.query(
+      `INSERT INTO opinions (
+        name, company, position, contactInfo, satisfaction, 
+        areasOfInterest, otherInterest, futureCooperation, 
+        futureCooperationDetails, followUpMeeting, preferredTopic, 
+        mostValuablePart, commentsSuggestions, consent
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+      [
+        name, company || '', position || '', contactInfo || '', satisfaction || '', 
+        JSON.stringify(areasOfInterest || []), otherInterest || '', futureCooperation || '', 
+        futureCooperationDetails || '', followUpMeeting || '', preferredTopic || '', 
+        mostValuablePart || '', commentsSuggestions || '', consent ? 1 : 0
+      ]
+    );
+    res.status(201).json({ message: 'Opinion saved successfully' });
+  } catch (error) {
+    console.error('Error saving opinion:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/opinions', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM opinions ORDER BY submittedAt DESC');
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching opinions:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/opinions/unread-count', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT COUNT(*) as count FROM opinions WHERE isRead = FALSE OR isRead IS NULL');
+    res.json({ count: rows[0].count });
+  } catch (error) {
+    console.error('Error fetching unread opinions count:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.patch('/api/opinions/:id/read', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query('UPDATE opinions SET isRead = TRUE WHERE id = ?', [id]);
+    res.json({ message: 'Marked as read' });
+  } catch (error) {
+    console.error('Error marking opinion as read:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+app.post('/api/admin/send-opinion-emails', async (req, res) => {
+  try {
+    const { participantIds } = req.body; // Array of IDs, or 'all'
+    
+    // Get mail config
+    const [configRows] = await pool.query("SELECT settingValue FROM settings WHERE settingKey = 'smtp_config'");
+    if (configRows.length === 0 || !configRows[0].settingValue) {
+      return res.status(400).json({ error: 'Mail configuration not found' });
+    }
+    
+    const config = JSON.parse(configRows[0].settingValue);
+    if (!config.email || !config.password) {
+      return res.status(400).json({ error: 'Incomplete mail configuration' });
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: config.host || 'smtp.hostinger.com',
+      port: parseInt(config.port) || 465,
+      secure: parseInt(config.port) === 465,
+      auth: {
+        user: config.email,
+        pass: config.password,
+      },
+    });
+
+    let query = "SELECT id, fullName, email FROM registrations WHERE status = 'Confirmed'";
+    let queryParams = [];
+    
+    if (Array.isArray(participantIds) && participantIds.length > 0) {
+      query += " AND id IN (?)";
+      queryParams = [participantIds];
+    }
+    
+    const [participants] = await pool.query(query, queryParams);
+    
+    let sentCount = 0;
+    
+    for (const p of participants) {
+      // Get the domain from headers or env
+      const baseUrl = req.headers.origin || process.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3000';
+      const opinionLink = `${baseUrl}/opinion`;
+      
+      const html = (config.opinionTemplate || defaultOpinionTemplate)
+        .replace(/{{fullName}}/g, p.fullName || '')
+        .replace(/{{opinionLink}}/g, opinionLink);
+
+      const mailOptions = {
+        from: `"Kizuna 2026 Seminar" <${config.email}>`,
+        to: p.email,
+        subject: 'Share Your Opinion - Kizuna 2026',
+        html,
+      };
+
+      try {
+        await transporter.sendMail(mailOptions);
+        await pool.query('UPDATE registrations SET opinionEmailSent = TRUE WHERE id = ?', [p.id]);
+        sentCount++;
+      } catch (err) {
+        console.error(`Failed to send opinion email to ${p.email}:`, err);
+      }
+    }
+
+    res.json({ message: `Emails sent successfully to ${sentCount} participants.`, sentCount });
+  } catch (error) {
+    console.error('Error sending opinion emails:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // Catch-all route to serve the React app for non-API requests (React Router support)
