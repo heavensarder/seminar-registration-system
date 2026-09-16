@@ -27,6 +27,15 @@ export const Footer: React.FC<FooterProps> = ({ onOpenRegister, onOpenVenue, onO
             </div>
           </div>
 
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <span className="text-xs text-teal-300/80 font-bold tracking-widest uppercase">
+              Associate with
+            </span>
+            <a href="https://nikkoucentre.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity" title="Visit Nikkou Centre">
+              <img src="/images/Nikkou-logo.png" alt="Nikkou Logo" className="h-16 sm:h-20 object-contain" />
+            </a>
+          </div>
+
         </div>
 
         {/* Bottom copyright */}
