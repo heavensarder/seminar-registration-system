@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, Settings, LogOut, Ticket, CheckCircle2, Mail, MessageSquare } from 'lucide-react';
+import { LayoutDashboard, Users, Settings, LogOut, Ticket, CheckCircle2, Mail, MessageSquare, Send } from 'lucide-react';
 import { TsiLogo } from './TsiLogo';
 
 interface AdminLayoutProps {
@@ -22,6 +22,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, onLogout }) 
     { name: 'Registrations', path: '/admin/registrations', icon: Users },
     { name: 'Confirmed List', path: '/admin/confirmed', icon: CheckCircle2 },
     { name: 'Mail Configuration', path: '/admin/mail-config', icon: Mail },
+    { name: 'Bulk Email', path: '/admin/bulk-email', icon: Send },
     { name: 'Event Settings', path: '/admin/event-settings', icon: Settings },
   ];
 

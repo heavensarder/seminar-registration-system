@@ -25,6 +25,7 @@ import { AdminEventSettingsPage } from './pages/AdminEventSettingsPage';
 import { OpinionPage } from './pages/OpinionPage';
 import { AdminOpinionEmailsPage } from './pages/AdminOpinionEmailsPage';
 import { AdminOpinionsListPage } from './pages/AdminOpinionsListPage';
+import { AdminBulkEmailPage } from './pages/AdminBulkEmailPage';
 
 function Home() {
   const navigate = useNavigate();
@@ -195,6 +196,16 @@ export default function App() {
           element={
             isAdminLoggedIn ? (
               <AdminEventSettingsPage onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          } 
+        />
+        <Route 
+          path="/admin/bulk-email" 
+          element={
+            isAdminLoggedIn ? (
+              <AdminBulkEmailPage onLogout={handleLogout} />
             ) : (
               <Navigate to="/admin/login" replace />
             )

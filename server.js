@@ -560,6 +560,73 @@ app.post('/api/admin/send-opinion-emails', async (req, res) => {
 });
 
 // Catch-all route to serve the React app for non-API requests (React Router support)
+app.post('/api/admin/send-bulk-emails', async (req, res) => {
+  try {
+    const { participantIds, subject, body } = req.body;
+    
+    if (!subject || !body) {
+      return res.status(400).json({ error: 'Subject and body are required' });
+    }
+
+    // Get mail config
+    const [configRows] = await pool.query("SELECT settingValue FROM settings WHERE settingKey = 'smtp_config'");
+    if (configRows.length === 0 || !configRows[0].settingValue) {
+      return res.status(400).json({ error: 'Mail configuration not found' });
+    }
+    
+    const config = JSON.parse(configRows[0].settingValue);
+    if (!config.email || !config.password) {
+      return res.status(400).json({ error: 'Incomplete mail configuration' });
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: config.host || 'smtp.hostinger.com',
+      port: parseInt(config.port) || 465,
+      secure: parseInt(config.port) === 465,
+      auth: {
+        user: config.email,
+        pass: config.password,
+      },
+    });
+
+    let query = "SELECT id, fullName, email FROM registrations WHERE status = 'Confirmed'";
+    let queryParams = [];
+    
+    if (Array.isArray(participantIds) && participantIds.length > 0) {
+      query += " AND id IN (?)";
+      queryParams = [participantIds];
+    }
+    
+    const [participants] = await pool.query(query, queryParams);
+    
+    let sentCount = 0;
+    
+    for (const p of participants) {
+      const compiledBody = body.replace(/\{\{fullName\}\}/g, p.fullName || '');
+
+      const mailOptions = {
+        from: `"Kizuna 2026 Seminar" <${config.email}>`,
+        to: p.email,
+        subject: subject,
+        html: compiledBody, // supports HTML
+      };
+
+      try {
+        await transporter.sendMail(mailOptions);
+        sentCount++;
+      } catch (err) {
+        console.error(`Failed to send bulk email to ${p.email}:`, err);
+      }
+    }
+
+    res.json({ message: `Emails sent successfully to ${sentCount} participants.`, sentCount });
+  } catch (error) {
+    console.error('Error sending bulk emails:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Catch-all route to serve the React app for non-API requests (React Router support)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
