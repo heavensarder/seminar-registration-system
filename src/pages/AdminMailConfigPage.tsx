@@ -10,6 +10,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
   const [host, setHost] = useState('smtp.hostinger.com');
   const [port, setPort] = useState('465');
   const [email, setEmail] = useState('');
+  const [senderName, setSenderName] = useState('Kizuna 2026 Seminar');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [template, setTemplate] = useState('');
@@ -47,6 +48,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
           if (data.host) setHost(data.host);
           if (data.port) setPort(data.port);
           if (data.email) setEmail(data.email);
+          if (data.senderName) setSenderName(data.senderName);
           if (data.password) setPassword(data.password);
           if (data.template) {
             setTemplate(data.template);
@@ -89,7 +91,7 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
       const res = await fetch(`${apiUrl}/settings/mail`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ host, port, email, password, template, opinionTemplate }),
+        body: JSON.stringify({ host, port, email, senderName, password, template, opinionTemplate }),
       });
 
       if (res.ok) {
@@ -148,20 +150,33 @@ export const AdminMailConfigPage: React.FC<AdminMailConfigPageProps> = ({ onLogo
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-teal-100 uppercase tracking-widest mb-2">Sender Email Address / Username</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <Mail className="w-5 h-5 text-teal-100/40" />
-                  </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-teal-100 uppercase tracking-widest mb-2">Sender Name</label>
                   <input
-                    type="email"
+                    type="text"
                     required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="e.g. event@kizuna2026.org"
-                    className="w-full bg-[#083331] border border-[#16605b] text-white pl-12 pr-4 py-3.5 rounded-xl outline-none focus:border-[#79ded7] focus:ring-1 focus:ring-[#79ded7] transition-all"
+                    value={senderName}
+                    onChange={(e) => setSenderName(e.target.value)}
+                    placeholder="e.g. Kizuna 2026 Seminar"
+                    className="w-full bg-[#083331] border border-[#16605b] text-white px-4 py-3.5 rounded-xl outline-none focus:border-[#79ded7] focus:ring-1 focus:ring-[#79ded7] transition-all"
                   />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-teal-100 uppercase tracking-widest mb-2">Sender Email Address</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <Mail className="w-5 h-5 text-teal-100/40" />
+                    </div>
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="e.g. event@kizuna2026.org"
+                      className="w-full bg-[#083331] border border-[#16605b] text-white pl-12 pr-4 py-3.5 rounded-xl outline-none focus:border-[#79ded7] focus:ring-1 focus:ring-[#79ded7] transition-all"
+                    />
+                  </div>
                 </div>
               </div>
 

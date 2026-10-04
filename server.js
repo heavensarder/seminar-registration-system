@@ -201,7 +201,7 @@ const sendConfirmationEmail = async (email, fullName, passId) => {
     const html = compileTemplate(config.template, fullName, passId);
 
     const mailOptions = {
-      from: `"Kizuna 2026 Seminar" <${config.email}>`,
+      from: `"${config.senderName || 'Kizuna 2026 Seminar'}" <${config.email}>`,
       to: email,
       subject: 'Confirmation: Kizuna 2026 OKAYAMA-BANGLADESH PARTNERSHIP SEMINAR',
       html,
@@ -331,12 +331,13 @@ app.get('/api/settings/mail', async (req, res) => {
         host: config.host || 'smtp.hostinger.com',
         port: config.port || '465',
         email: config.email || '', 
+        senderName: config.senderName || 'Kizuna 2026 Seminar',
         password: config.password || '',
         template: config.template || defaultTemplate,
         opinionTemplate: config.opinionTemplate || defaultOpinionTemplate
       });
     }
-    res.json({ host: 'smtp.hostinger.com', port: '465', email: '', password: '', template: defaultTemplate, opinionTemplate: defaultOpinionTemplate });
+    res.json({ host: 'smtp.hostinger.com', port: '465', email: '', senderName: 'Kizuna 2026 Seminar', password: '', template: defaultTemplate, opinionTemplate: defaultOpinionTemplate });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -344,12 +345,13 @@ app.get('/api/settings/mail', async (req, res) => {
 
 app.post('/api/settings/mail', async (req, res) => {
   try {
-    const { host, port, email, password, template, opinionTemplate } = req.body;
+    const { host, port, email, senderName, password, template, opinionTemplate } = req.body;
     
     const settingValue = JSON.stringify({ 
       host, 
       port, 
       email, 
+      senderName,
       password, 
       template: template || defaultTemplate,
       opinionTemplate: opinionTemplate || defaultOpinionTemplate
@@ -541,7 +543,7 @@ app.post('/api/admin/send-opinion-emails', async (req, res) => {
         .replace(/{{opinionLink}}/g, opinionLink);
 
       const mailOptions = {
-        from: `"Kizuna 2026 Seminar" <${config.email}>`,
+        from: `"${config.senderName || 'Kizuna 2026 Seminar'}" <${config.email}>`,
         to: p.email,
         subject: 'Share Your Opinion - Kizuna 2026',
         html,
@@ -609,7 +611,7 @@ app.post('/api/admin/send-bulk-emails', async (req, res) => {
       const compiledBody = body.replace(/\{\{fullName\}\}/g, p.fullName || '');
 
       const mailOptions = {
-        from: `"Kizuna 2026 Seminar" <${config.email}>`,
+        from: `"${config.senderName || 'Kizuna 2026 Seminar'}" <${config.email}>`,
         to: p.email,
         subject: subject,
         html: compiledBody, // supports HTML
