@@ -97,6 +97,12 @@ export const AdminBulkEmailPage: React.FC<AdminBulkEmailPageProps> = ({ onLogout
                 rows={10}
                 className="w-full bg-[#041e1d] text-white border border-[#16605b] rounded-xl px-4 py-3 focus:outline-none focus:border-[#79ded7] transition-colors font-mono text-sm"
               ></textarea>
+              <p className="mt-2 text-xs text-teal-100/60 flex items-center gap-1">
+                <span className="font-bold text-teal-100/90">Available Variables:</span>
+                <code className="bg-[#083331] text-[#79ded7] px-1.5 py-0.5 rounded border border-[#16605b]/50">
+                  {`{{fullName}}`}
+                </code>
+              </p>
             </div>
           </div>
         </div>
