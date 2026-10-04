@@ -101,6 +101,10 @@ async function initDb() {
       await connection.query('ALTER TABLE opinions ADD COLUMN isRead BOOLEAN DEFAULT FALSE');
     } catch(e) {}
 
+    try {
+      await connection.query('ALTER TABLE registrations ADD COLUMN bulkEmailSent BOOLEAN DEFAULT FALSE');
+    } catch(e) {}
+
     console.log('Database initialized successfully.');
     connection.release();
   } catch (error) {
@@ -613,6 +617,7 @@ app.post('/api/admin/send-bulk-emails', async (req, res) => {
 
       try {
         await transporter.sendMail(mailOptions);
+        await pool.query('UPDATE registrations SET bulkEmailSent = TRUE WHERE id = ?', [p.id]);
         sentCount++;
       } catch (err) {
         console.error(`Failed to send bulk email to ${p.email}:`, err);

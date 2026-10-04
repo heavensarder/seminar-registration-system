@@ -148,13 +148,21 @@ export const AdminBulkEmailPage: React.FC<AdminBulkEmailPageProps> = ({ onLogout
                         <div className="text-teal-100/60 text-xs">{reg.email}</div>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <button
-                          onClick={() => sendBulkEmail([reg.id])}
-                          disabled={isSending}
-                          className="bg-[#083331] text-white border border-[#16605b] hover:bg-[#16605b] px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50 cursor-pointer"
-                        >
-                          Send Individually
-                        </button>
+                        <div className="flex items-center justify-end gap-3">
+                          {!!reg.bulkEmailSent && (
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20 flex items-center gap-1">
+                              <CheckCircle2 className="w-3 h-3" />
+                              Sent
+                            </span>
+                          )}
+                          <button
+                            onClick={() => sendBulkEmail([reg.id])}
+                            disabled={isSending}
+                            className={`${reg.bulkEmailSent ? 'bg-transparent text-[#79ded7] border-[#79ded7]/30 hover:bg-[#79ded7]/10' : 'bg-[#083331] text-white border-[#16605b] hover:bg-[#16605b]'} border px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50 cursor-pointer`}
+                          >
+                            {reg.bulkEmailSent ? 'Resend' : 'Send Individually'}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
