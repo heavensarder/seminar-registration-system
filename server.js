@@ -631,6 +631,16 @@ app.post('/api/admin/send-bulk-emails', async (req, res) => {
   }
 });
 
+app.post('/api/admin/reset-bulk-emails', async (req, res) => {
+  try {
+    await pool.query('UPDATE registrations SET bulkEmailSent = FALSE');
+    res.json({ message: 'Bulk email status reset successfully.' });
+  } catch (error) {
+    console.error('Error resetting bulk email status:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Catch-all route to serve the React app for non-API requests (React Router support)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));

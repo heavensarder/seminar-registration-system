@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '../components/AdminLayout';
-import { Mail, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Mail, Send, CheckCircle2, AlertCircle, RotateCcw } from 'lucide-react';
 
 interface AdminBulkEmailPageProps {
   onLogout: () => void;
@@ -54,6 +54,7 @@ export const AdminBulkEmailPage: React.FC<AdminBulkEmailPageProps> = ({ onLogout
       if (response.ok) {
         setSuccessMsg(data.message || 'Emails sent successfully.');
         setTimeout(() => setSuccessMsg(''), 5000);
+        await fetchConfirmedRegistrations();
       } else {
         setErrorMsg(data.error || 'Failed to send emails.');
       }
@@ -62,6 +63,26 @@ export const AdminBulkEmailPage: React.FC<AdminBulkEmailPageProps> = ({ onLogout
       setErrorMsg('A network error occurred.');
     } finally {
       setIsSending(false);
+    }
+  };
+
+  const resetBulkEmailStatus = async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${apiUrl}/admin/reset-bulk-emails`, {
+        method: 'POST',
+      });
+      
+      if (response.ok) {
+        setSuccessMsg('Email status reset successfully. You can now send new emails.');
+        setTimeout(() => setSuccessMsg(''), 5000);
+        await fetchConfirmedRegistrations();
+      } else {
+        setErrorMsg('Failed to reset status.');
+      }
+    } catch (error) {
+      console.error('Failed to reset bulk email status:', error);
+      setErrorMsg('A network error occurred.');
     }
   };
 
@@ -123,6 +144,14 @@ export const AdminBulkEmailPage: React.FC<AdminBulkEmailPageProps> = ({ onLogout
         <div className="bg-[#052322] border border-[#16605b]/50 rounded-3xl overflow-hidden shadow-xl">
           <div className="p-6 border-b border-[#16605b]/30 flex justify-between items-center">
             <h3 className="font-headline font-bold text-white tracking-widest uppercase">Confirmed Participants ({registrations.length})</h3>
+            <button
+              onClick={resetBulkEmailStatus}
+              className="bg-transparent hover:bg-rose-500/10 text-rose-400 border border-rose-500/30 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer"
+              title="Reset all Sent tags to prepare for a new email"
+            >
+              <RotateCcw className="w-4 h-4" />
+              Reset Status
+            </button>
           </div>
 
           <div className="overflow-x-auto">
