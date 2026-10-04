@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '../components/AdminLayout';
-import { Mail, Send, CheckCircle2, AlertCircle, RotateCcw } from 'lucide-react';
+import { Mail, Send, CheckCircle2, AlertCircle, RotateCcw, Eraser } from 'lucide-react';
 
 interface AdminBulkEmailPageProps {
   onLogout: () => void;
@@ -13,8 +13,13 @@ export const AdminBulkEmailPage: React.FC<AdminBulkEmailPageProps> = ({ onLogout
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
-  const [subject, setSubject] = useState('');
-  const [emailBody, setEmailBody] = useState('');
+  const [subject, setSubject] = useState(() => localStorage.getItem('bulkEmailSubject') || '');
+  const [emailBody, setEmailBody] = useState(() => localStorage.getItem('bulkEmailBody') || '');
+
+  useEffect(() => {
+    localStorage.setItem('bulkEmailSubject', subject);
+    localStorage.setItem('bulkEmailBody', emailBody);
+  }, [subject, emailBody]);
 
   const fetchConfirmedRegistrations = async () => {
     try {
@@ -86,6 +91,13 @@ export const AdminBulkEmailPage: React.FC<AdminBulkEmailPageProps> = ({ onLogout
     }
   };
 
+  const handleClearDraft = () => {
+    if (confirm('Are you sure you want to clear the subject and email body?')) {
+      setSubject('');
+      setEmailBody('');
+    }
+  };
+
   return (
     <AdminLayout onLogout={onLogout}>
       <div className="max-w-6xl mx-auto space-y-8 pb-12">
@@ -94,9 +106,20 @@ export const AdminBulkEmailPage: React.FC<AdminBulkEmailPageProps> = ({ onLogout
             <Mail className="w-6 h-6 text-[#79ded7]" />
             Bulk Email Sender
           </h3>
-          <p className="text-teal-100/70 text-sm max-w-2xl mb-6">
-            Compose and send emails to confirmed participants. You can use HTML formatting in the body. Use <code>{`{{fullName}}`}</code> to inject the participant's name.
-          </p>
+          
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <p className="text-teal-100/70 text-sm max-w-2xl">
+              Compose and send emails to confirmed participants. You can use HTML formatting in the body. Use <code>{`{{fullName}}`}</code> to inject the participant's name.
+            </p>
+            <button
+              onClick={handleClearDraft}
+              className="text-xs flex items-center gap-2 text-rose-400 hover:text-rose-300 transition-colors uppercase tracking-widest font-bold cursor-pointer shrink-0"
+              title="Clear the subject and email body"
+            >
+              <Eraser className="w-4 h-4" />
+              Clear Content
+            </button>
+          </div>
 
           <div className="space-y-4">
             <div>
